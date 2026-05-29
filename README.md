@@ -61,6 +61,8 @@ No necesitas saber qué tool hay detrás. El editor decide cómo obtener lo que 
 El editor tiene colegas con enfoques distintos a los que puede llamar según lo que necesites:
 
 - **`@writer`** — para generar prosa, diálogo, descripciones. Le dices el tono y lo que buscas; él escribe.
+
+  > ⚠️ *Advertencia de salud narrativa: el que escribe eres tú. Usa a @writer como un compañero de lluvia de ideas, no como un sustituto. Pídele borradores, versiones alternativas, desbloqueos cuando estés atascado. Pero no dejes que te robe el placer de poner tus propias palabras. Si sientes que ya no escribes tú, estás usando la herramienta al revés. Que sea tu ayudante, no tu relevo.*
 - **`@critico`** — ojo de guionista, sin piedad. Busca agujeros, clichés, reglas rotas. Úsalo cuando quieras que alguien le pegue una patada honesta a tu manuscrito.
 - **`@lector`** — lee como si no supiera nada del mundo ni de tus intenciones. Ideal para saber si lo que escribiste se entiende por sí solo.
 - **`@structurer`** — para problemas de estructura, ritmo, arco narrativo. Él diseña; el crítico revisa su diseño.
