@@ -24,6 +24,8 @@ cd mi-libro
 # Abrir con opencode, o arrastrar a Obsidian
 ```
 
+**Primera vez en Obsidian**: al abrir la bóveda, ve a *Settings → Community plugins → Safe Mode (desactivar)*. Los plugins preconfigurados aparecerán listos para instalar.
+
 El MCP server se registra automáticamente desde `opencode.json`.
 
 ## Trabajar con la IA: tu editor de viaje
