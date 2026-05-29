@@ -77,7 +77,12 @@ hacer con la herramienta y elija por dónde empezar.
 │   ├── lore.md
 │   ├── patrones.json
 │   ├── config.json, character_states.json, consistency.json, continuity.json
-│   └── ejemplos/             # Ejemplos rellenos (solo referencia)
+│   └── ejemplos/             # Ejemplos rellenos (misma estructura que el vault)
+│       ├── Escritura/
+│       ├── Mundo/
+│       │   ├── Personajes/
+│       │   ├── Lugares/
+│       │   └── Historia/
 ├── .tools/
 │   ├── vault.py              # Módulo compartido (vault discovery, text/chapter utils)
 │   ├── fiction_mcp.py        # MCP context server
