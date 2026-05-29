@@ -26,6 +26,60 @@ cd mi-libro
 
 El MCP server se registra automáticamente desde `opencode.json`.
 
+## Trabajar con la IA
+
+Al abrir la bóveda con opencode, el asistente lee `AGENTS.md` y sabe exactamente cómo está organizado tu manuscrito. No tienes que explicarle nada cada vez.
+
+**Cada sesión empieza sola**: el asistente ejecuta `session_check.py`, ve qué cambió desde la última vez, y está listo para trabajar.
+
+### Qué puedes pedirle
+
+| Si quieres… | Le dices… |
+|---|---|
+| Saber el estado general de la novela | «Dame la carta editorial» |
+| Revisar un capítulo concreto | «Revisa el capítulo 7, céntrate en diálogo» |
+| Detectar problemas de ritmo | «¿Cómo va el ritmo? ¿Hay capítulos que lastran?» |
+| Verificar que un personaje habla como debería | «Comprueba la voz de Sera en el capítulo 10» |
+| Detectar telling emocional | «Busca tellings en el capítulo 14» |
+| Saber qué hilos narrativos están abiertos | «¿Qué foreshadowing queda sin pagar?» |
+| Comprobar si dos escenas se contradicen | «Verifica consistencia entre capítulos 8 y 11» |
+
+No necesitas recordar nombres de tools ni flags — el asistente los llama por ti.
+
+### Agentes especializados
+
+Además del asistente principal, puedes pedirle que active agentes con enfoques distintos para tareas concretas:
+
+- **`@writer`** — para generar o reescribir prosa, diálogo, descripciones. Dile el tono y lo que necesitas.
+- **`@critico`** — ojo de guionista implacable. Busca agujeros, clichés, reglas rotas. No endulza. Úsalo cuando quieras que alguien le pegue una patada a tu manuscrito.
+- **`@lector`** — lee como si no supiera nada del mundo ni de tu intención. Ideal para saber si lo que escribiste se entiende sin contexto.
+- **`@structurer`** — problema de estructura, ritmo o arco narrativo. Él diseña, el crítico revisa su diseño.
+
+Puedes combinarlos: «Pasa el capítulo 7 por @critico y luego por @lector». O dejar que el asistente los coordine cuando el problema es complejo.
+
+### Ejemplo de sesión real
+
+```
+Tú: Revisa el capítulo 11
+→ Asistente: ejecuta get_chapter_context(11), check_consistency(11),
+  check_voice_consistency(11, personaje), scan_prose()…
+  Te devuelve un diagnóstico con problemas encontrados.
+Tú: La escena del Abismo no termina de funcionar. Pásala por @critico.
+→ @critico: señala que el Abismo habla demasiado, pierde misterio.
+Tú: @writer, reescribe ese fragmento con menos diálogo del Abismo.
+→ @writer: propone una versión más contenida.
+Tú: Aplica el cambio.
+→ Asistente: edita el archivo, re-escannea, confirma que mejora.
+```
+
+### Qué necesitas (solo)
+
+1. Tener opencode instalado
+2. Clonar este repo
+3. Escribir en Obsidian (o en cualquier editor de texto)
+
+El asistente se encarga del resto.
+
 ## Windows
 
 Cambiar `python3` por `python` en `opencode.json`:
