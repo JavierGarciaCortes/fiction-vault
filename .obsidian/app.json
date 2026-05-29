@@ -1,0 +1,8 @@
+{
+  "userIgnoreFilters": [
+    "tools/",
+    "output/",
+    "tools/templates/",
+    "AGENTS"
+  ]
+}

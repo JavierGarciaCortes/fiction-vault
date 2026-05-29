@@ -4,3 +4,10 @@ __pycache__/
 *.egg-info/
 .ruff_cache/
 dist/
+
+# Obsidian (auto-generated, user-specific)
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/plugins/*/main.js
+.obsidian/plugins/*/manifest.json
+.obsidian/plugins/*/styles.css
