@@ -1,9 +1,4 @@
 {
-  "descripcion": "Orden narrativo de los capítulos. El índice del array + 1 = número de capítulo.",
-  "orden": [
-    {
-      "archivo": "El susurro.md",
-      "pov": "_Lyra"
-    }
-  ]
+  "descripcion": "Orden narrativo de los capítulos: añade entradas a 'orden' con 'archivo' (ruta desde Escritura/) y 'pov' (personaje narrador). El índice del array + 1 = número de capítulo.",
+  "orden": []
 }

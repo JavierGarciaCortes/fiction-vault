@@ -113,26 +113,32 @@ Y si en algún momento sientes que no te entiende, que te da consejos genéricos
 
 El editor se encarga del resto.
 
-## Ejemplos incluidos
+## Estructura inicial
 
-El repositorio viene con un mini-ejemplo para que veas cómo encajan las piezas:
+La bóveda viene con **templates vacíos** en los directorios de contenido (`Mundo/Personajes/`, `Mundo/Lugares/`, `Mundo/Historia/`, `Escritura/`) y **ejemplos rellenos** en `tools/templates/examples/` para que veas el formato:
 
-| Archivo | Muestra |
+| Ubicación | Propósito |
 |---|---|
-| `Mundo/Personajes/_Lyra.md` | Ficha de personaje con voz, apariencia, citas |
-| `Mundo/Lugares/_Valle de los Ecos.md` | Ubicación con atmósfera, historia, lugares de interés |
-| `Mundo/Historia/_El Eco.md` | Lore: reglas del fenómeno mágico |
-| `Escritura/El susurro.md` | Capítulo con metadatos YAML (`capítulo: 1`), wikilinks y diálogo |
-| `Escritura/manifiesto.json` | Registro de capítulos que leen las tools |
-| `Referencias/Trama principal.md` | Esquema argumental — sustituir por tu trama |
-| `Referencias/Cronología.md` | Línea temporal — rellenar con tus eventos |
-| `Referencias/Estado.md` | Foto fija del manuscrito — actualizar cada sesión |
-| `Referencias/Foreshadowing.md` | Ledger de siembras y pagos — rellenar al escribir |
-| `Referencias/Índice.md` | Mapa de navegación de la bóveda |
-| `Referencias/Outliner.md` | Plan estructural: capítulos, POV, decisiones |
-| `Referencias/Pendientes.md` | Tareas pendientes entre sesiones |
+| `tools/templates/` | Plantillas vacías para crear personajes, lugares, lore y capítulos |
+| `tools/templates/examples/` | Ejemplos rellenos (personaje, lugar, lore, capítulo) — solo referencia |
+| `Escritura/manifiesto.json` | Registro de capítulos que leen las tools — rellenar con tus archivos |
+| `Mundo/Personajes/` → `tools/templates/character.md` | Crear un `.md` por personaje |
+| `Mundo/Lugares/` → `tools/templates/location.md` | Crear un `.md` por ubicación |
+| `Mundo/Historia/` → `tools/templates/lore.md` | Lore, magia, cronología interna |
+| `Escritura/` → `tools/templates/chapter.md` | Capítulos con YAML frontmatter |
 
-Los ejemplos usan prefijo `_` para distinguirse de tu contenido. Bórralos cuando empieces.
+Los `Referencias/` también vienen precargados con cabeceras y secciones guía:
+| Archivo | Propósito |
+|---|---|
+| `Trama principal.md` | Esquema argumental |
+| `Cronología.md` | Línea temporal de eventos |
+| `Estado.md` | Foto fija del manuscrito (palabras, scores, puntos débiles) |
+| `Foreshadowing.md` | Ledger de siembras y pagos |
+| `Índice.md` | Mapa de navegación de la bóveda |
+| `Outliner.md` | Plan estructural: capítulos, POV, decisiones |
+| `Pendientes.md` | Tareas pendientes entre sesiones |
+
+Los ejemplos en `tools/templates/examples/` son solo referencia — no los edites. Los templates vacíos de `Mundo/` y `Escritura/` son los que debes rellenar con tu proyecto.
 
 ## Windows
 

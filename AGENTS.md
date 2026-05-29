@@ -155,7 +155,7 @@ Patrones en `Estilo/patrones.json`. Categorías:
 
 ## 4. Workflow de revisión <!-- PROYECTO — adapta los capítulos a tu libro -->
 
-> **⚠️ Archivos de ejemplo:** Los archivos con prefijo `_` (ej: `_Lyra.md`, `_Valle de los Ecos.md`) son demostraciones de la plantilla, no contenido real del proyecto. Ignorarlos. No tratarlos como personajes, lugares, lore ni capítulos reales.
+> **⚠️ Archivos de ejemplo:** Los archivos en `tools/templates/examples/` son demostraciones de la plantilla, no contenido real. Ignorarlos. Los templates vacíos en `Mundo/` y `Escritura/` son los que debes rellenar con tu proyecto.
 
 ### ⚠️ Regla fundamental: quién escribe
 
@@ -380,7 +380,7 @@ Estructura tres actos: setup (01–0X) → confrontación (0X–0Y) → resoluci
 
 ## 16. Ritual de inicio de sesión (OBLIGATORIO)
 
-> **⚠️ Archivos de ejemplo:** Los archivos con prefijo `_` (ej: `_Lyra.md`) son demostraciones de la plantilla, no contenido real. Ignorarlos. Las herramientas y este ritual operan sobre tus archivos reales (sin prefijo `_`).
+> **⚠️ Archivos de ejemplo:** Los archivos en `tools/templates/examples/` son demostraciones de la plantilla, no contenido real. Ignorarlos. Rellena los templates vacíos de `Mundo/` y `Escritura/` con tu proyecto.
 
 > **⚠️ Guarda de primera sesión:** Si el paso 1 muestra `⚡ PRIMERA SESIÓN`, salta el resto del ritual y ve directamente a la **sección 0 (Onboarding)**. Vuelve aquí cuando el proyecto tenga capítulos reales y seguimiento.
 
