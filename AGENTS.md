@@ -5,6 +5,43 @@
 
 ---
 
+## 0. Onboarding: primera sesión
+
+Cuando ejecutes `session_check.py` y detecte que es la primera sesión
+(no hay Estado.md, Pendientes.md, commits ni capítulos reales), su
+salida empieza con `⚡ PRIMERA SESIÓN`. En ese momento, **no entres
+al workflow de revisión estándar**. En su lugar:
+
+1. **Pregunta al usuario estas 5 cosas** para entender el proyecto:
+   - **Género** — ¿ficción, no ficción? ¿fantasía, ciencia ficción, thriller, romance, híbrido?
+   - **Premisa** — ¿de qué trata? ¿hay protagonista y conflicto central? (1-3 líneas basta)
+   - **Extensión** — ¿novela (~80k palavras), novela corta (~40k), serie de libros?
+   - **Público** — ¿adulto, juvenil, middle grade, infantil?
+   - **Referentes** — ¿qué autores o libros te inspiran? (opcional, pero ayuda)
+
+2. **Con las respuestas**, ofrece sugerencias de cómo usar las herramientas:
+   - Para empezar a escribir desde cero: crear primer capítulo con `new_chapter.py`
+   - Para planificar antes de escribir: rellenar `Trama principal.md`, `Cronología.md` y fichas de personajes en `Mundo/Personajes/`
+   - Para explorar el lore: `Mundo/Historia/` para reglas mágicas, geografía, cronología interna
+   - Para seguir sin presión: simplemente escribir en `Escritura/` y dejar que las tools ayuden después
+
+3. **Pregunta si quiere configurar algo**:
+   - `.fiction/config.json` — acts, POV por defecto, midpoint
+   - `.fiction/voice_profiles.json` — perfiles de voz para diagnóstico
+   - `.fiction/continuity.json` — reglas de muerte, revelaciones
+   - `Estilo/Guía de estilo.md` — reglas narrativas del proyecto
+
+4. **Ejemplo de invitación:**
+   > "Veo que esta bóveda está recién creada. No hay capítulos, personajes ni
+   > seguimiento todavía. Antes de lanzarme a suggestions, cuéntame: ¿qué tipo
+   > de libro quieres escribir? Así adapto el flujo a tu proyecto."
+
+No sobrecargues al usuario con tecnicismos en la primera interacción.
+Sé conversacional. El objetivo es que el usuario entienda qué puede
+hacer con la herramienta y elija por dónde empezar.
+
+---
+
 ## 1. Estructura de la bóveda
 
 ```
@@ -344,6 +381,8 @@ Estructura tres actos: setup (01–0X) → confrontación (0X–0Y) → resoluci
 ## 16. Ritual de inicio de sesión (OBLIGATORIO)
 
 > **⚠️ Archivos de ejemplo:** Los archivos con prefijo `_` (ej: `_Lyra.md`) son demostraciones de la plantilla, no contenido real. Ignorarlos. Las herramientas y este ritual operan sobre tus archivos reales (sin prefijo `_`).
+
+> **⚠️ Guarda de primera sesión:** Si el paso 1 muestra `⚡ PRIMERA SESIÓN`, salta el resto del ritual y ve directamente a la **sección 0 (Onboarding)**. Vuelve aquí cuando el proyecto tenga capítulos reales y seguimiento.
 
 Al empezar CUALQUIER sesión de edición/escritura, ejecutar estos pasos en orden:
 
