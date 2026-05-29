@@ -1,20 +1,3 @@
-[build-system]
-requires = ["setuptools>=68"]
-build-backend = "setuptools.build_meta"
-
-[project]
-name = "fiction-tools"
-version = "1.0.0"
-description = "Herramientas de escritura para ficción en español"
-requires-python = ">=3.11"
-dependencies = []
-
-[project.optional-dependencies]
-pdf = ["weasyprint"]
-
-[tool.setuptools.packages.find]
-include = ["tools*"]
-
 [tool.ruff]
 line-length = 100
 target-version = "py311"
