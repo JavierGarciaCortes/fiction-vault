@@ -49,10 +49,10 @@ Y está listo. No hay ritual de puesta al día.
 | Una foto general de la novela | «Dame la carta editorial» |
 | Revisar un capítulo a fondo | «Revisa el capítulo 7, céntrate en diálogo» |
 | Saber si hay problemas de ritmo | «¿Cómo va el ritmo? ¿Hay capítulos que lastran?» |
-| Verificar que un personaje suena auténtico | «Comprueba la voz de Sera en el capítulo 10» |
-| Detectar telling emocional | «Busca tellings en el capítulo 14» |
+| Verificar que un personaje suena auténtico | «Comprueba la voz de Gandalf en el capítulo 5» |
+| Detectar telling emocional | «Busca tellings en el capítulo 3» |
 | Saber qué hilos dejaste abiertos | «¿Qué foreshadowing queda sin pagar?» |
-| Comprobar si dos escenas se contradicen | «Verifica consistencia entre capítulos 8 y 11» |
+| Comprobar si dos escenas se contradicen | «Verifica consistencia entre los capítulos 2 y 6» |
 
 No necesitas saber qué tool hay detrás. El editor decide cómo obtener lo que pides.
 
@@ -70,14 +70,14 @@ Puedes pedir combinaciones: «Pasa el capítulo 7 por @critico y luego por @lect
 ### Cómo se trabaja con él
 
 ```
-Tú: Revisa el capítulo 11
-→ El editor ejecuta get_chapter_context(11), check_consistency(11),
-  check_voice_consistency(11, Kael), scan_prose()…
+Tú: Revisa el capítulo 4
+→ El editor ejecuta get_chapter_context(4), check_consistency(4),
+  check_voice_consistency(4, Frodo), scan_prose()…
   Te devuelve un diagnóstico con problemas encontrados.
-Tú: La escena del Abismo no termina de funcionar. Pásala por @critico.
+Tú: La escena de Mordor no termina de funcionar. Pásala por @critico.
 → El editor llama al @critico con el contexto de la escena.
-  @critico: señala que el Abismo habla demasiado, pierde misterio.
-Tú: @writer, reescribe ese fragmento con menos diálogo del Abismo.
+  @critico: señala que el Anillo habla demasiado, pierde misterio.
+Tú: @writer, reescribe ese fragmento con menos intervención del Anillo.
 → El editor llama a @writer con las objeciones del crítico.
   @writer: propone una versión más contenida.
 Tú: Aplica el cambio.
@@ -199,7 +199,7 @@ y genera el archivo `.md` en la ubicación correcta.
 ```bash
 python tools/new_chapter.py "Título del capítulo"      # al final del manuscrito
 python tools/new_chapter.py "Título" -p 5              # insertar después del capítulo 5
-python tools/new_chapter.py "Título" --pov Lena        # con POV predefinido
+python tools/new_chapter.py "Título" --pov Frodo       # con POV predefinido
 python tools/new_chapter.py --list                     # listar capítulos existentes
 ```
 
