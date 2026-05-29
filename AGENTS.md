@@ -90,7 +90,8 @@ hacer con la herramienta y elija por dónde empezar.
 │   ├── session_check.py      # Resumen de cambios entre sesiones
 │   ├── manifiesto.py         # Módulo compartido para leer manifiesto.json
 │   ├── sync_manifiesto.py    # Sincroniza YAML desde manifiesto
-│   └── editorial_skill.md    # Skill de edición para el asistente
+├── .opencode/
+│   └── skills/               # Skills del asistente (editorial_skill.md)
 ├── opencode.json
 └── AGENTS.md
 ```
@@ -269,7 +270,7 @@ El resto funciona igual — `pathlib` maneja las rutas automáticamente.
 
 ## 9. Skill de edición
 
-El archivo `tools/editorial_skill.md` contiene instrucciones detalladas para cada tipo de tarea:
+El archivo `.opencode/skills/editorial_skill.md` contiene instrucciones detalladas para cada tipo de tarea:
 - **Edición de prosa**: orden de tools, criterios de aceptación/rechazo
 - **Edición de diálogo**: verificación de voz por personaje, NUNCA diría
 - **Edición estructural**: pacing, escenas, hooks, arco emocional
@@ -285,7 +286,7 @@ Después de CUALQUIER modificación (editar prosa, crear/renumerar capítulos, a
 2. **`Referencias/Estado.md`** — tabla de scores, herramientas, pendientes, última actualización
 3. **Story bible** — personajes, lugares, historia, cronología, trama si se tocó lore o eventos
 4. **`.fiction/`** — consistency.json, character_states.json si se tocó tiempo/clima/estados
-5. **`tools/editorial_skill.md`** — si se añadieron nuevas tools, flags o flujos
+5. **`.opencode/skills/editorial_skill.md`** — si se añadieron nuevas tools, flags o flujos
 6. **`Escritura/manifiesto.json`** — si se insertó/eliminó/reordenó un capítulo
 7. **Ejecutar `sync_manifiesto.py`** tras modificar manifiesto
 8. **Ejecutar `prose_scanner.py --validate`** después de modificar `patrones.json`
@@ -350,7 +351,7 @@ python tools/consistency_check.py --json              # salida JSON
 | `.fiction/voice_profiles.json` | Perfiles de voz para check_voice_consistency |
 | `Mundo/Personajes/*.md` | Fichas con voz, tics, NUNCA diría |
 | `Mundo/Lugares/*.md` | Fichas con atmósfera, sonidos, capítulos |
-| `tools/editorial_skill.md` | Skill de edición: flujos paso a paso por tipo de tarea |
+| `.opencode/skills/editorial_skill.md` | Skill de edición: flujos paso a paso por tipo de tarea |
 
 ---
 
