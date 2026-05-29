@@ -27,37 +27,48 @@ from vault import VAULT, CHAPTERS_DIR, ESTADO_FILE, PENDIENTES_FILE, get_chapter
 def is_first_session() -> tuple[bool, str]:
     """Detecta si es la primera sesión en una bóveda nueva.
 
-    Returns:
-        (True, razón) si es primera sesión
-        (False, "") si la bóveda ya tiene actividad
+    Tres indicadores principales, independientes de git:
+    - Estado.md (seguimiento del proyecto)
+    - Pendientes.md (tareas)
+    - Capítulos reales (sin prefijo _)
+
+    Si al menos dos de tres apuntan a "vacío", es primera sesión.
+    Git se usa solo como refuerzo descriptivo, no como condición.
     """
     reasons = []
 
-    if not ESTADO_FILE.exists():
-        reasons.append("no hay Referencias/Estado.md (seguimiento del proyecto)")
-
-    if not PENDIENTES_FILE.exists():
-        reasons.append("no hay Referencias/Pendientes.md (tareas pendientes)")
-
-    try:
-        r = subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True, cwd=VAULT)
-        if r.returncode != 0:
-            reasons.append("no hay commits en git (bóveda recién creada)")
-    except FileNotFoundError:
-        reasons.append("git no disponible")
+    sin_estado = not ESTADO_FILE.exists()
+    sin_pendientes = not PENDIENTES_FILE.exists()
+    sin_capitulos_reales = True
 
     try:
         from vault import get_chapter_files
         chapters = get_chapter_files()
         real = [c for c in chapters if not c.name.startswith("_")]
-        if not real:
-            reasons.append("no hay capítulos reales (solo ejemplos con prefijo _)")
+        sin_capitulos_reales = not bool(real)
     except Exception:
         pass
 
-    if reasons:
-        return True, "; ".join(reasons)
-    return False, ""
+    if sin_estado:
+        reasons.append("no hay Referencias/Estado.md (seguimiento del proyecto)")
+    if sin_pendientes:
+        reasons.append("no hay Referencias/Pendientes.md (tareas pendientes)")
+    if sin_capitulos_reales:
+        reasons.append("no hay capítulos reales (solo ejemplos con prefijo _)")
+
+    vacios = sum([sin_estado, sin_pendientes, sin_capitulos_reales])
+    if vacios < 2:
+        return False, ""
+
+    # Git es solo informativo — no condiciona el resultado
+    try:
+        r = subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True, cwd=VAULT)
+        if r.returncode != 0:
+            reasons.append("(sin commits en git)")
+    except FileNotFoundError:
+        pass
+
+    return True, "; ".join(reasons)
 
 
 # ---------------------------------------------------------------------------
