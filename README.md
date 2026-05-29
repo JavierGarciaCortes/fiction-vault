@@ -37,6 +37,10 @@ Typewriter Mode y Typographer ya vienen preconfigurados (comillas, rayado, scrol
 El repositorio incluye **archivos de ejemplo** (prefijo `_`) en `Mundo/`, `Escritura/` y `Referencias/`
 para que veas cómo se estructura una bóveda funcional. Bórralos cuando empieces tu propio proyecto.
 
+**Los nombres de archivo de capítulos no llevan número** — el orden y numeración se definen
+en `Escritura/manifiesto.json` y en el YAML de cada capítulo (`capítulo: N`). Así puedes
+insertar, renombrar y reordenar sin romper nada.
+
 El MCP server se registra automáticamente desde `opencode.json`.
 
 ## Trabajar con la IA: tu editor de viaje
@@ -118,7 +122,7 @@ El repositorio viene con un mini-ejemplo para que veas cómo encajan las piezas:
 | `Mundo/Personajes/_Lyra.md` | Ficha de personaje con voz, apariencia, citas |
 | `Mundo/Lugares/_Vale de los Ecos.md` | Ubicación con atmósfera, historia, lugares de interés |
 | `Mundo/Historia/_El Eco.md` | Lore: reglas del fenómeno mágico |
-| `Escritura/01 - El susurro.md` | Capítulo con metadatos YAML, wikilinks y diálogo |
+| `Escritura/El susurro.md` | Capítulo con metadatos YAML (`capítulo: 1`), wikilinks y diálogo |
 | `Escritura/manifiesto.json` | Registro de capítulos que leen las tools |
 | `Referencias/Trama principal.md` | Esquema argumental — sustituir por tu trama |
 | `Referencias/Cronología.md` | Línea temporal — rellenar con tus eventos |
