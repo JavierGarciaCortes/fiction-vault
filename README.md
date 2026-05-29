@@ -24,7 +24,16 @@ cd mi-libro
 # Abrir con opencode, o arrastrar a Obsidian
 ```
 
-**Primera vez en Obsidian**: al abrir la bóveda, ve a *Settings → Community plugins → Safe Mode (desactivar)*. Los plugins preconfigurados aparecerán listos para instalar.
+**Primera vez en Obsidian**: abre la bóveda, ve a *Settings → Community plugins → Safe Mode (desactivar)* e instala estos plugins desde la comunidad:
+
+| Plugin | ID | Para qué |
+|---|---|---|
+| [Dataview](https://obsidian.md/plugins?search=dataview) | `dataview` | Consultas y filtros sobre metadatos |
+| [Typewriter Mode](https://obsidian.md/plugins?search=typewriter-mode) | `typewriter-mode` | Modo máquina de escribir, enfoque en la línea actual |
+| [Typographer](https://obsidian.md/plugins?search=typographer) | `typographer` | Comillas latinas «», rayas —, puntos suspensivos … |
+| [Reading Time](https://obsidian.md/plugins?search=obsidian-reading-time) | `obsidian-reading-time` | Tiempo de lectura estimado |
+
+Typewriter Mode y Typographer ya vienen preconfigurados (comillas, rayado, scroll de enfoque).
 
 El MCP server se registra automáticamente desde `opencode.json`.
 
