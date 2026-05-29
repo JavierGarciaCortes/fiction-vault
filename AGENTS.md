@@ -15,7 +15,9 @@
 │   └── Historia/        # Lore, magia, cronología
 ├── Referencias/
 │   ├── Trama principal.md
-│   ├── Outliner.md         # Word counts, decisiones, hoja de ruta
+│   ├── Outliner.md           # Word counts, decisiones, hoja de ruta
+│   ├── Índice.md             # Personajes, lugares, conceptos clave
+│   ├── Pendientes.md         # Tareas pendientes y prioridades
 │   ├── Cronología.md
 │   ├── Foreshadowing.md
 │   ├── Estado.md
@@ -43,8 +45,7 @@
 │   ├── consistency_check.py  # Verificador de consistencia
 │   ├── session_check.py      # Resumen de cambios entre sesiones
 │   ├── manifiesto.py         # Módulo compartido para leer manifiesto.json
-│   ├── sync_manifiesto.py    # Sincroniza YAML desde manifiesto
-│   └── setup.sh              # Inicializar bóveda nueva
+│   └── sync_manifiesto.py    # Sincroniza YAML desde manifiesto
 ├── opencode.json
 └── AGENTS.md
 ```
@@ -116,6 +117,8 @@ Patrones en `Estilo/patrones.json`. Categorías:
 ---
 
 ## 4. Workflow de revisión <!-- PROYECTO — adapta los capítulos a tu libro -->
+
+> **⚠️ Archivos de ejemplo:** Los archivos con prefijo `_` (ej: `_Lyra.md`, `_Valle de los Ecos.md`) son demostraciones de la plantilla, no contenido real del proyecto. Ignorarlos. No tratarlos como personajes, lugares, lore ni capítulos reales.
 
 ### ⚠️ Regla fundamental: quién escribe
 
@@ -306,17 +309,7 @@ python tools/consistency_check.py --json              # salida JSON
 
 ---
 
-## 13. Para crear otra bóveda nueva
-
-```bash
-bash tools/setup.sh /ruta/a/otra-boveda
-```
-
-El script replica toda la estructura. Después editar secciones PROYECTO.
-
----
-
-## 14. Tabla de capítulos (resumen rápido)  <!-- PROYECTO -->
+## 13. Tabla de capítulos (resumen rápido)  <!-- PROYECTO -->
 
 | Cap | Título | POV | Lugar | Palabras | Arco |
 |-----|--------|-----|-------|----------|------|
@@ -327,7 +320,7 @@ Estructura tres actos: setup (01–0X) → confrontación (0X–0Y) → resoluci
 
 ---
 
-## 15. Reglas POV  <!-- PROYECTO — una sección por personaje-POV -->
+## 14. Reglas POV  <!-- PROYECTO — una sección por personaje-POV -->
 
 ### [Personaje 1] (caps XX–YY)
 - **Tiempo verbal**: [ej: pretérito perfecto simple e imperfecto]
@@ -339,7 +332,7 @@ Estructura tres actos: setup (01–0X) → confrontación (0X–0Y) → resoluci
 
 ---
 
-## 16. Puntos débiles conocidos  <!-- PROYECTO -->
+## 15. Puntos débiles conocidos  <!-- PROYECTO -->
 
 | Cap | Problema | Prioridad |
 |-----|----------|-----------|
@@ -348,7 +341,9 @@ Estructura tres actos: setup (01–0X) → confrontación (0X–0Y) → resoluci
 
 ---
 
-## 17. Ritual de inicio de sesión (OBLIGATORIO)
+## 16. Ritual de inicio de sesión (OBLIGATORIO)
+
+> **⚠️ Archivos de ejemplo:** Los archivos con prefijo `_` (ej: `_Lyra.md`) son demostraciones de la plantilla, no contenido real. Ignorarlos. Las herramientas y este ritual operan sobre tus archivos reales (sin prefijo `_`).
 
 Al empezar CUALQUIER sesión de edición/escritura, ejecutar estos pasos en orden:
 
@@ -368,7 +363,7 @@ Sin atajos. Las tools y los archivos son la fuente de verdad.
 
 ---
 
-## 18. Coordinación multi-agente
+## 17. Coordinación multi-agente
 
 El editor actúa como coordinador único entre el usuario y los subagentes.
 
