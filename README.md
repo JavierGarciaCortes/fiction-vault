@@ -111,21 +111,6 @@ Cambiar `python3` por `python` en `opencode.json`:
 3. Rellenar `Mundo/Personajes/`, `Mundo/Lugares/`, `Mundo/Historia/`
 4. Usar `Referencias/Outliner.md` para planificar el manuscrito
 
-### ¿Qué puedes tocar?
-
-Casi todos los análisis tienen thresholds ajustables en JSON. No hace falta tocar código:
-
-| ¿Qué quieres cambiar? | Archivo |
-|---|---|
-| Qué cuenta como "huella IA", "muletilla" o "estructura frágil" | `Estilo/patrones.json` — prioridades, regex, densidad máxima |
-| La longitud ideal de capítulo por acto | `.fiction/config.json` — `acts` con rango de palabras |
-| Cómo habla cada personaje y qué patrones vigilar | `.fiction/voice_profiles.json` — checks por personaje |
-| Objetos, clima, atributos que deben ser consistentes | `.fiction/consistency.json` — valores esperados por capítulo |
-| Reglas de muerte, revelaciones, cambios de estado | `.fiction/continuity.json` — qué personajes no pueden reaparecer |
-| Umbral de "párrafo plano" o "pico emocional" | `.fiction/config.json` — parámetros de arco emocional |
-
-Si algo no te gusta del análisis, lo cambias ahí. Las tools lo leen en caliente.
-
 ## Tools
 
 ### `prose_scanner.py` — Escáner de patrones de prosa
