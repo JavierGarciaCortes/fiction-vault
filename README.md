@@ -88,7 +88,7 @@ Tú: Aplica el cambio.
   «Aplicado. La densidad de patrones bajó de 1.8 a 0.9 en ese capítulo.»
 ```
 
-### Cómo empiezas
+Y si en algún momento sientes que no te entiende, que te da consejos genéricos o que sus análisis no encajan con lo que buscas — **díselo**. No se ofende. Puedes pedirle que ajuste su tono, que sea más o menos crítico, que se centre en lo que a ti te importa. Y también puedes pedirle que **cambie las herramientas**: que suba o baje el umbral de la carta editorial, que añada un patrón nuevo al escáner de prosa, que modifique cómo detecta el telling o que reajuste la longitud objetivo de los capítulos. Todo son archivos JSON. El agente los edita por ti. El que manda eres tú.
 
 1. Instalas opencode
 2. Clonas este repo
