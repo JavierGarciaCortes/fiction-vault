@@ -1,4 +1,4 @@
-# _Vale de los Ecos
+# _Valle de los Ecos
 
 **También conocido como:** El Valle que Repite
 

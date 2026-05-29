@@ -5,7 +5,7 @@ título: El susurro
 
 # Capítulo 1: El susurro
 
-[[_Lyra]] llegó al [[_Vale de los Ecos]] al atardecer, aunque dentro del valle el atardecer duraba siempre. La niebla se enredaba entre los árboles como si tuviera intención propia.
+[[_Lyra]] llegó al [[_Valle de los Ecos]] al atardecer, aunque dentro del valle el atardecer duraba siempre. La niebla se enredaba entre los árboles como si tuviera intención propia.
 
 —Según el mapa, la aldea debería estar aquí —dijo en voz alta, solo por oírse.
 

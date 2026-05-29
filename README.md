@@ -120,7 +120,7 @@ El repositorio viene con un mini-ejemplo para que veas cómo encajan las piezas:
 | Archivo | Muestra |
 |---|---|
 | `Mundo/Personajes/_Lyra.md` | Ficha de personaje con voz, apariencia, citas |
-| `Mundo/Lugares/_Vale de los Ecos.md` | Ubicación con atmósfera, historia, lugares de interés |
+| `Mundo/Lugares/_Valle de los Ecos.md` | Ubicación con atmósfera, historia, lugares de interés |
 | `Mundo/Historia/_El Eco.md` | Lore: reglas del fenómeno mágico |
 | `Escritura/El susurro.md` | Capítulo con metadatos YAML (`capítulo: 1`), wikilinks y diálogo |
 | `Escritura/manifiesto.json` | Registro de capítulos que leen las tools |

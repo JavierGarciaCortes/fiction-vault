@@ -28,7 +28,7 @@ De cartógrafa que observa el mundo desde fuera a alguien que se implica en lo q
 
 ## Relaciones
 
-- **[[_Vale de los Ecos]]**: el lugar que viene a cartografiar
+- **[[_Valle de los Ecos]]**: el lugar que viene a cartografiar
 
 ## Citas
 
