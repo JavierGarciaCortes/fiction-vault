@@ -26,59 +26,73 @@ cd mi-libro
 
 El MCP server se registra automáticamente desde `opencode.json`.
 
-## Trabajar con la IA
+## Trabajar con la IA: tu editor de viaje
 
-Al abrir la bóveda con opencode, el asistente lee `AGENTS.md` y sabe exactamente cómo está organizado tu manuscrito. No tienes que explicarle nada cada vez.
+Esta herramienta no es un chatbot al que le pides cosas sueltas. Es un **editor** que se sienta a tu lado durante todo el proceso de escribir: desde el primer borrador hasta la versión final. Conoce tu manuscrito, entiende tu mundo, y te ayuda a tomar decisiones.
 
-**Cada sesión empieza sola**: el asistente ejecuta `session_check.py`, ve qué cambió desde la última vez, y está listo para trabajar.
+No tienes que explicarle quién es cada personaje ni qué pasó en el capítulo anterior — lo sabe. No tienes que recordar comandos ni flags — se anticipa a lo que necesitas.
+
+### Cómo empieza cada sesión
+
+Abres la bóveda y el editor ya está al día:
+
+- Ejecuta `session_check.py` — ve qué cambió desde la última vez
+- Lee los pendientes — sabe en qué te quedaste
+- Consulta el estado del manuscrito — tiene los scores frescos
+
+Y está listo. No hay ritual de puesta al día.
 
 ### Qué puedes pedirle
 
-| Si quieres… | Le dices… |
+| Quieres… | Le dices… |
 |---|---|
-| Saber el estado general de la novela | «Dame la carta editorial» |
-| Revisar un capítulo concreto | «Revisa el capítulo 7, céntrate en diálogo» |
-| Detectar problemas de ritmo | «¿Cómo va el ritmo? ¿Hay capítulos que lastran?» |
-| Verificar que un personaje habla como debería | «Comprueba la voz de Sera en el capítulo 10» |
+| Una foto general de la novela | «Dame la carta editorial» |
+| Revisar un capítulo a fondo | «Revisa el capítulo 7, céntrate en diálogo» |
+| Saber si hay problemas de ritmo | «¿Cómo va el ritmo? ¿Hay capítulos que lastran?» |
+| Verificar que un personaje suena auténtico | «Comprueba la voz de Sera en el capítulo 10» |
 | Detectar telling emocional | «Busca tellings en el capítulo 14» |
-| Saber qué hilos narrativos están abiertos | «¿Qué foreshadowing queda sin pagar?» |
+| Saber qué hilos dejaste abiertos | «¿Qué foreshadowing queda sin pagar?» |
 | Comprobar si dos escenas se contradicen | «Verifica consistencia entre capítulos 8 y 11» |
 
-No necesitas recordar nombres de tools ni flags — el asistente los llama por ti.
+No necesitas saber qué tool hay detrás. El editor decide cómo obtener lo que pides.
 
-### Agentes especializados
+### Su equipo de especialistas
 
-Además del asistente principal, puedes pedirle que active agentes con enfoques distintos para tareas concretas:
+El editor tiene colegas con enfoques distintos a los que puede llamar según lo que necesites:
 
-- **`@writer`** — para generar o reescribir prosa, diálogo, descripciones. Dile el tono y lo que necesitas.
-- **`@critico`** — ojo de guionista implacable. Busca agujeros, clichés, reglas rotas. No endulza. Úsalo cuando quieras que alguien le pegue una patada a tu manuscrito.
-- **`@lector`** — lee como si no supiera nada del mundo ni de tu intención. Ideal para saber si lo que escribiste se entiende sin contexto.
-- **`@structurer`** — problema de estructura, ritmo o arco narrativo. Él diseña, el crítico revisa su diseño.
+- **`@writer`** — para generar prosa, diálogo, descripciones. Le dices el tono y lo que buscas; él escribe.
+- **`@critico`** — ojo de guionista, sin piedad. Busca agujeros, clichés, reglas rotas. Úsalo cuando quieras que alguien le pegue una patada honesta a tu manuscrito.
+- **`@lector`** — lee como si no supiera nada del mundo ni de tus intenciones. Ideal para saber si lo que escribiste se entiende por sí solo.
+- **`@structurer`** — para problemas de estructura, ritmo, arco narrativo. Él diseña; el crítico revisa su diseño.
 
-Puedes combinarlos: «Pasa el capítulo 7 por @critico y luego por @lector». O dejar que el asistente los coordine cuando el problema es complejo.
+Puedes pedir combinaciones: «Pasa el capítulo 7 por @critico y luego por @lector». O dejar que el editor coordine él solo cuando el problema es complejo — llama a los especialistas que hagan falta, les pasa el contexto, recoge sus informes y te devuelve una síntesis.
 
-### Ejemplo de sesión real
+### Cómo se trabaja con él
 
 ```
 Tú: Revisa el capítulo 11
-→ Asistente: ejecuta get_chapter_context(11), check_consistency(11),
-  check_voice_consistency(11, personaje), scan_prose()…
+→ El editor ejecuta get_chapter_context(11), check_consistency(11),
+  check_voice_consistency(11, Kael), scan_prose()…
   Te devuelve un diagnóstico con problemas encontrados.
 Tú: La escena del Abismo no termina de funcionar. Pásala por @critico.
-→ @critico: señala que el Abismo habla demasiado, pierde misterio.
+→ El editor llama al @critico con el contexto de la escena.
+  @critico: señala que el Abismo habla demasiado, pierde misterio.
 Tú: @writer, reescribe ese fragmento con menos diálogo del Abismo.
-→ @writer: propone una versión más contenida.
+→ El editor llama a @writer con las objeciones del crítico.
+  @writer: propone una versión más contenida.
 Tú: Aplica el cambio.
-→ Asistente: edita el archivo, re-escannea, confirma que mejora.
+→ El editor edita el archivo, re-ejecuta scan_prose() para
+  confirmar que mejora, actualiza los scores.
+  «Aplicado. La densidad de patrones bajó de 1.8 a 0.9 en ese capítulo.»
 ```
 
-### Qué necesitas (solo)
+### Cómo empiezas
 
-1. Tener opencode instalado
-2. Clonar este repo
-3. Escribir en Obsidian (o en cualquier editor de texto)
+1. Instalas opencode
+2. Clonas este repo
+3. Escribes en Obsidian (o en cualquier editor de texto)
 
-El asistente se encarga del resto.
+El editor se encarga del resto.
 
 ## Windows
 
