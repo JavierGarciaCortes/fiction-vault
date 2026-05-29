@@ -2,7 +2,7 @@
 
 Estructura base para arrancar un proyecto de escritura con [opencode](https://opencode.ai).
 
-Compatible con **Obsidian** — todo el contenido son archivos Markdown con wikilinks `[[enlaces]]`.
+Compatible con [Obsidian](https://obsidian.md) — todo el contenido son archivos Markdown con wikilinks `[[enlaces]]`.
 Los capítulos, fichas de personaje, ubicaciones y lore se editan en Obsidian; las tools python
 trabajan directamente sobre los `.md`.
 
