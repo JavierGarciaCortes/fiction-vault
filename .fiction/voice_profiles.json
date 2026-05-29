@@ -1,0 +1,13 @@
+{
+  "description": "Perfiles de voz de personajes para check_voice_consistency y editorial_letter.",
+  "profiles": {
+    "Protagonista": {
+      "esperado": "Describe el patrón de habla (ej. preguntativa, imperativa, formal...)",
+      "checks": [["preguntas", null], ["imperativos", null]]
+    },
+    "Antagonista": {
+      "esperado": "Describe el patrón de habla del antagonista",
+      "checks": [["elipsis", null], ["longitud_media", null]]
+    }
+  }
+}

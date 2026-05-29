@@ -1,0 +1,6 @@
+output/
+__pycache__/
+.venv/
+*.egg-info/
+.ruff_cache/
+dist/

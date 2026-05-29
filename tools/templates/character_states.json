@@ -1,0 +1,10 @@
+{
+  "description": "Estados de personaje por rango de capítulos.",
+  "characters": {
+    "Protagonista": [
+      [1, 5, "Introducción. Descubriendo el mundo."],
+      [6, 10, "Conflicto. Enfrentando al antagonista."],
+      [11, 15, "Clímax. Decisión final."]
+    ]
+  }
+}

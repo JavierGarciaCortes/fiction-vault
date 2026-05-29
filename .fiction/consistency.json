@@ -1,0 +1,28 @@
+{
+  "description": "Registro curado de consistencia fina: objetos, tiempo, clima, atributos y ubicaciones por capítulo. Edítalo a medida que escribes.",
+  "objects": {
+    "objeto_ejemplo": {
+      "name": "nombre del objeto",
+      "aliases": ["sinónimo 1", "sinónimo 2"],
+      "owner": "Personaje",
+      "first_chapter": 1,
+      "last_chapter": 5,
+      "events": [
+        { "chapter": 1, "note": "Aparece por primera vez." }
+      ]
+    }
+  },
+  "time_chain": [
+    { "chapter": 1, "time": "indeterminado", "keywords": [] }
+  ],
+  "weather_chain": [
+    { "chapter": 1, "weather": "sin especificar", "keywords": [] }
+  ],
+  "attributes": [
+    { "character": "Protagonista", "chapter": 1, "attr": "hair", "value": "[color/largo]", "keywords": [] },
+    { "character": "Protagonista", "chapter": 1, "attr": "eyes", "value": "[color]", "keywords": [] }
+  ],
+  "locations": [
+    { "character": "Protagonista", "chapter": 1, "location": "[lugar]", "keywords": [] }
+  ]
+}
