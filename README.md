@@ -28,7 +28,6 @@ cd mi-libro
 
 | Plugin | ID | Para qué |
 |---|---|---|
-| [Dataview](https://obsidian.md/plugins?search=dataview) | `dataview` | Consultas y filtros sobre metadatos |
 | [Typewriter Mode](https://obsidian.md/plugins?search=typewriter-mode) | `typewriter-mode` | Modo máquina de escribir, enfoque en la línea actual |
 | [Typographer](https://obsidian.md/plugins?search=typographer) | `typographer` | Comillas latinas «», rayas —, puntos suspensivos … |
 | [Reading Time](https://obsidian.md/plugins?search=obsidian-reading-time) | `obsidian-reading-time` | Tiempo de lectura estimado |
