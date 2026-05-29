@@ -35,7 +35,7 @@ def _find_vault() -> Path:
     if env:
         return Path(env).resolve()
     script_dir = Path(__file__).resolve().parent
-    if script_dir.name == "tools":
+    if script_dir.name == ".tools":
         return script_dir.parent
     return Path.cwd().resolve()
 

@@ -149,7 +149,7 @@ Los ejemplos en `Plantillas/ejemplos/` son solo referencia — no los edites ni 
 Cambiar `python3` por `python` en `opencode.json`:
 
 ```json
-"command": ["python", "tools/fiction_mcp.py"]
+"command": ["python", ".tools/fiction_mcp.py"]
 ```
 
 ## Personalización
@@ -167,18 +167,18 @@ Examina cada párrafo contra una batería de patrones (`Estilo/patrones.json`) y
 matches agrupados por categoría: huellas IA, estructuras frágiles, muletillas de voz, etc.
 
 ```bash
-python tools/prose_scanner.py                      # resumen global de todos los capítulos
-python tools/prose_scanner.py --cap 07             # detalle de un capítulo concreto
-python tools/prose_scanner.py --cap 07 --context full  # incluye párrafos completos
-python tools/prose_scanner.py --json               # salida JSON (para análisis programático)
-python tools/prose_scanner.py --review             # modo interactivo: confirma/rechaza cada match
-python tools/prose_scanner.py --estilo             # estadísticas de estructura (párrafos, diálogo vs narrativa)
-python tools/prose_scanner.py --ritmo              # longitud de frases, variación
-python tools/prose_scanner.py --king               # análisis Stephen King (adverbios, voz pasiva, subestimado)
-python tools/prose_scanner.py --sanderson          # análisis Sanderson (coste de magia, proactividad, escalación)
-python tools/prose_scanner.py --validate           # detecta overlaps entre patrones
-python tools/prose_scanner.py --update-estado      # actualiza scores en Estado.md
-python tools/prose_scanner.py --door closed        # modo puerta cerrada (solo crítico, sin nitpicks)
+python .tools/prose_scanner.py                      # resumen global de todos los capítulos
+python .tools/prose_scanner.py --cap 07             # detalle de un capítulo concreto
+python .tools/prose_scanner.py --cap 07 --context full  # incluye párrafos completos
+python .tools/prose_scanner.py --json               # salida JSON (para análisis programático)
+python .tools/prose_scanner.py --review             # modo interactivo: confirma/rechaza cada match
+python .tools/prose_scanner.py --estilo             # estadísticas de estructura (párrafos, diálogo vs narrativa)
+python .tools/prose_scanner.py --ritmo              # longitud de frases, variación
+python .tools/prose_scanner.py --king               # análisis Stephen King (adverbios, voz pasiva, subestimado)
+python .tools/prose_scanner.py --sanderson          # análisis Sanderson (coste de magia, proactividad, escalación)
+python .tools/prose_scanner.py --validate           # detecta overlaps entre patrones
+python .tools/prose_scanner.py --update-estado      # actualiza scores en Estado.md
+python .tools/prose_scanner.py --door closed        # modo puerta cerrada (solo crítico, sin nitpicks)
 ```
 
 ### `editorial_letter.py` — Carta editorial automatizada
@@ -188,14 +188,14 @@ inmersión sensorial, foreshadowing, show vs tell, hooks de apertura/cierre, y u
 plan de revisión priorizado.
 
 ```bash
-python tools/editorial_letter.py                   # carta editorial completa (todos los análisis)
-python tools/editorial_letter.py --beta            # informe profesional sintético
-python tools/editorial_letter.py --cap 07          # análisis detallado de un capítulo
-python tools/editorial_letter.py --resumen         # solo tabla de prioridades
-python tools/editorial_letter.py --plan            # plan de revisión faseado
-python tools/editorial_letter.py --insights        # análisis avanzados (estilo, diálogo, Save the Cat…)
-python tools/editorial_letter.py --json            # salida JSON
-python tools/editorial_letter.py --compare old/ new/  # diff entre dos versiones del manuscrito
+python .tools/editorial_letter.py                   # carta editorial completa (todos los análisis)
+python .tools/editorial_letter.py --beta            # informe profesional sintético
+python .tools/editorial_letter.py --cap 07          # análisis detallado de un capítulo
+python .tools/editorial_letter.py --resumen         # solo tabla de prioridades
+python .tools/editorial_letter.py --plan            # plan de revisión faseado
+python .tools/editorial_letter.py --insights        # análisis avanzados (estilo, diálogo, Save the Cat…)
+python .tools/editorial_letter.py --json            # salida JSON
+python .tools/editorial_letter.py --compare old/ new/  # diff entre dos versiones del manuscrito
 ```
 
 ### `editorial_insights.py` — Análisis avanzados
@@ -204,17 +204,17 @@ Analiza aspectos concretos del manuscrito: estilo, calidad del diálogo, Save th
 beats, Chekhov's Gun, backstory dumps, ratio escena/resumen, arco Vonnegut, etc.
 
 ```bash
-python tools/editorial_insights.py                          # todos los módulos
-python tools/editorial_insights.py --module style            # solo diagnóstico de estilo
-python tools/editorial_insights.py --module dialogue         # solo calidad de diálogo
-python tools/editorial_insights.py --module save_cat         # solo beats de Save the Cat
-python tools/editorial_insights.py --module chekhov          # solo Chekhov's Gun
-python tools/editorial_insights.py --module first_pages      # test de primeras 10 páginas
-python tools/editorial_insights.py --module backstory        # info-dumps de backstory
-python tools/editorial_insights.py --module scene_summary    # ratio escena vs resumen
-python tools/editorial_insights.py --module arc              # arco narrativo (Vonnegut)
-python tools/editorial_insights.py --module hotspots         # hotspots de revisión
-python tools/editorial_insights.py --json                    # salida JSON
+python .tools/editorial_insights.py                          # todos los módulos
+python .tools/editorial_insights.py --module style            # solo diagnóstico de estilo
+python .tools/editorial_insights.py --module dialogue         # solo calidad de diálogo
+python .tools/editorial_insights.py --module save_cat         # solo beats de Save the Cat
+python .tools/editorial_insights.py --module chekhov          # solo Chekhov's Gun
+python .tools/editorial_insights.py --module first_pages      # test de primeras 10 páginas
+python .tools/editorial_insights.py --module backstory        # info-dumps de backstory
+python .tools/editorial_insights.py --module scene_summary    # ratio escena vs resumen
+python .tools/editorial_insights.py --module arc              # arco narrativo (Vonnegut)
+python .tools/editorial_insights.py --module hotspots         # hotspots de revisión
+python .tools/editorial_insights.py --json                    # salida JSON
 ```
 
 ### `consistency_check.py` — Verificador de consistencia
@@ -223,10 +223,10 @@ Lee `.fiction/consistency.json` y compara contra el texto de los capítulos para
 detectar contradicciones en objetos, tiempo, clima, atributos de personajes y ubicaciones.
 
 ```bash
-python tools/consistency_check.py               # verificación global
-python tools/consistency_check.py --cap 07      # solo un capítulo
-python tools/consistency_check.py --cap 14-18   # rango de capítulos
-python tools/consistency_check.py --json        # salida JSON
+python .tools/consistency_check.py               # verificación global
+python .tools/consistency_check.py --cap 07      # solo un capítulo
+python .tools/consistency_check.py --cap 14-18   # rango de capítulos
+python .tools/consistency_check.py --json        # salida JSON
 ```
 
 ### `session_check.py` — Resumen de cambios entre sesiones
@@ -235,10 +235,10 @@ Al empezar una sesión de edición, muestra qué archivos cambiaron, actualiza
 los scores de prosa y resume los pendientes activos.
 
 ```bash
-python tools/session_check.py          # diff + scores
-python tools/session_check.py --quick  # solo diff, sin escáner
-python tools/session_check.py --full   # incluye Estado.md y checklist del ritual
-python tools/session_check.py --json   # salida JSON
+python .tools/session_check.py          # diff + scores
+python .tools/session_check.py --quick  # solo diff, sin escáner
+python .tools/session_check.py --full   # incluye Estado.md y checklist del ritual
+python .tools/session_check.py --json   # salida JSON
 ```
 
 ### `new_chapter.py` — Creador de capítulos
@@ -247,10 +247,10 @@ Crea un nuevo capítulo desde plantilla, lo registra en `Escritura/manifiesto.js
 y genera el archivo `.md` en la ubicación correcta.
 
 ```bash
-python tools/new_chapter.py "Título del capítulo"      # al final del manuscrito
-python tools/new_chapter.py "Título" -p 5              # insertar después del capítulo 5
-python tools/new_chapter.py "Título" --pov Frodo       # con POV predefinido
-python tools/new_chapter.py --list                     # listar capítulos existentes
+python .tools/new_chapter.py "Título del capítulo"      # al final del manuscrito
+python .tools/new_chapter.py "Título" -p 5              # insertar después del capítulo 5
+python .tools/new_chapter.py "Título" --pov Frodo       # con POV predefinido
+python .tools/new_chapter.py --list                     # listar capítulos existentes
 ```
 
 ### `sync_manifiesto.py` — Sincronización YAML
@@ -259,8 +259,8 @@ Lee `Escritura/manifiesto.json` y sincroniza el orden y metadatos en los
 frontmatter YAML de cada capítulo.
 
 ```bash
-python tools/sync_manifiesto.py          # sincronizar
-python tools/sync_manifiesto.py --dry    # simular sin escribir
+python .tools/sync_manifiesto.py          # sincronizar
+python .tools/sync_manifiesto.py --dry    # simular sin escribir
 ```
 
 ### `publish.py` — Publicación (EPUB / HTML / PDF)
@@ -269,13 +269,13 @@ Compila todos los capítulos en un libro listo para compartir. Los tres formatos
 se generan desde la misma fuente Markdown.
 
 ```bash
-python tools/publish.py                         # EPUB → output/
-python tools/publish.py --format all            # EPUB + HTML + PDF
-python tools/publish.py --format html           # solo HTML
-python tools/publish.py --format pdf            # solo PDF (necesita weasyprint)
-python tools/publish.py --beta                  # HTML para beta readers (con nº de línea)
-python tools/publish.py -o ../mi-libro          # ruta de salida personalizada
-python tools/publish.py --title "Mi Libro" --author "Yo"  # metadatos
+python .tools/publish.py                         # EPUB → output/
+python .tools/publish.py --format all            # EPUB + HTML + PDF
+python .tools/publish.py --format html           # solo HTML
+python .tools/publish.py --format pdf            # solo PDF (necesita weasyprint)
+python .tools/publish.py --beta                  # HTML para beta readers (con nº de línea)
+python .tools/publish.py -o ../mi-libro          # ruta de salida personalizada
+python .tools/publish.py --title "Mi Libro" --author "Yo"  # metadatos
 ```
 
 ### `fiction_mcp.py` — MCP server (automático)

@@ -78,7 +78,7 @@ hacer con la herramienta y elija por dónde empezar.
 │   ├── patrones.json
 │   ├── config.json, character_states.json, consistency.json, continuity.json
 │   └── ejemplos/             # Ejemplos rellenos (solo referencia)
-├── tools/
+├── .tools/
 │   ├── vault.py              # Módulo compartido (vault discovery, text/chapter utils)
 │   ├── fiction_mcp.py        # MCP context server
 │   ├── prose_scanner.py      # Escáner de patrones de prosa
@@ -98,7 +98,7 @@ hacer con la herramienta y elija por dónde empezar.
 
 ---
 
-## 2. MCP Context Server (`tools/fiction_mcp.py`)
+## 2. MCP Context Server (`.tools/fiction_mcp.py`)
 
 Sin dependencias externas (stdlib). Se registra en `opencode.json` y se inicia solo.
 
@@ -143,16 +143,16 @@ Sin dependencias externas (stdlib). Se registra en `opencode.json` y se inicia s
 
 ---
 
-## 3. Scanner (`tools/prose_scanner.py`)
+## 3. Scanner (`.tools/prose_scanner.py`)
 
 ```bash
-python tools/prose_scanner.py              # resumen global
-python tools/prose_scanner.py --cap XX     # detalle de un capítulo
-python tools/prose_scanner.py --cap XX --context full  # con párrafos completos
-python tools/prose_scanner.py --json        # salida JSON
-python tools/prose_scanner.py --review      # modo interactivo
-python tools/prose_scanner.py --ritmo       # estadísticas de longitud de frases
-python tools/prose_scanner.py --validate    # detectar overlaps entre patrones
+python .tools/prose_scanner.py              # resumen global
+python .tools/prose_scanner.py --cap XX     # detalle de un capítulo
+python .tools/prose_scanner.py --cap XX --context full  # con párrafos completos
+python .tools/prose_scanner.py --json        # salida JSON
+python .tools/prose_scanner.py --review      # modo interactivo
+python .tools/prose_scanner.py --ritmo       # estadísticas de longitud de frases
+python .tools/prose_scanner.py --validate    # detectar overlaps entre patrones
 ```
 
 Patrones en `Estilo/patrones.json`. Categorías:
@@ -164,7 +164,7 @@ Patrones en `Estilo/patrones.json`. Categorías:
 
 ## 4. Workflow de revisión <!-- PROYECTO — adapta los capítulos a tu libro -->
 
-> **⚠️ Archivos de ejemplo:** Los archivos en `tools/templates/examples/` son demostraciones de la plantilla, no contenido real. Ignorarlos. Los templates vacíos en `Mundo/` y `Escritura/` son los que debes rellenar con tu proyecto.
+> **⚠️ Archivos de ejemplo:** Los archivos en `Plantillas/ejemplos/` son demostraciones de la plantilla, no contenido real. Ignorarlos. Los templates vacíos en `Mundo/` y `Escritura/` son los que debes rellenar con tu proyecto.
 
 ### ⚠️ Regla fundamental: quién escribe
 
@@ -177,7 +177,7 @@ Patrones en `Estilo/patrones.json`. Categorías:
 5. **Formatear** con la metodología estándar (bloque ACTUAL/PROPUESTA) y **presentar al usuario** para su aprobación
 
 ### Preliminar (cada sesión)
-1. **Ejecutar `python tools/session_check.py`** — resumen de qué cambió (no opcional)
+1. **Ejecutar `python .tools/session_check.py`** — resumen de qué cambió (no opcional)
 2. **`editorial_letter(beta=true)`** — carta editorial sintética con todas las analíticas
 3. **`get_foreshadowing()`** — ledger completo de siembras y pagos
 4. **Leer `Referencias/Estado.md`** — scores pre-cambio, puntos débiles conocidos
@@ -249,7 +249,7 @@ Fichas completas en `Mundo/Personajes/*.md`.
 El MCP server usa `python3` en `opencode.json`. En Windows, cambiar a `python`:
 
 ```json
-"command": ["python", "tools/fiction_mcp.py"]
+"command": ["python", ".tools/fiction_mcp.py"]
 ```
 
 El resto funciona igual — `pathlib` maneja las rutas automáticamente.
@@ -315,26 +315,26 @@ make format             # ruff format
 ### Equivalencias directas
 
 ```bash
-python tools/prose_scanner.py                         # scan global
-python tools/prose_scanner.py --cap XX --context full # detalle con contexto
-python tools/prose_scanner.py --review                # interactivo
-python tools/publish.py                               # EPUB → output/
-python tools/publish.py --format all                  # EPUB + HTML + PDF
-python tools/editorial_letter.py                      # carta completa
-python tools/editorial_letter.py --resumen            # solo prioridades
-python tools/editorial_letter.py --plan               # plan de revisión faseado
-python tools/editorial_letter.py --beta               # informe profesional
-python tools/editorial_letter.py --insights           # análisis avanzado
-python tools/editorial_letter.py --compare old/ new/  # comparar versiones
-python tools/editorial_insights.py --module style     # diagnóstico de estilo
-python tools/editorial_insights.py --module dialogue  # calidad de diálogo
-python tools/new_chapter.py --list                    # listar capítulos
-python tools/new_chapter.py "Título" -p 5            # insertar en posición 5
-python tools/sync_manifiesto.py                       # sincronizar YAML
-python tools/sync_manifiesto.py --dry                 # simular
-python tools/consistency_check.py                     # consistencia global
-python tools/consistency_check.py --cap XX            # capítulo específico
-python tools/consistency_check.py --json              # salida JSON
+python .tools/prose_scanner.py                         # scan global
+python .tools/prose_scanner.py --cap XX --context full # detalle con contexto
+python .tools/prose_scanner.py --review                # interactivo
+python .tools/publish.py                               # EPUB → output/
+python .tools/publish.py --format all                  # EPUB + HTML + PDF
+python .tools/editorial_letter.py                      # carta completa
+python .tools/editorial_letter.py --resumen            # solo prioridades
+python .tools/editorial_letter.py --plan               # plan de revisión faseado
+python .tools/editorial_letter.py --beta               # informe profesional
+python .tools/editorial_letter.py --insights           # análisis avanzado
+python .tools/editorial_letter.py --compare old/ new/  # comparar versiones
+python .tools/editorial_insights.py --module style     # diagnóstico de estilo
+python .tools/editorial_insights.py --module dialogue  # calidad de diálogo
+python .tools/new_chapter.py --list                    # listar capítulos
+python .tools/new_chapter.py "Título" -p 5            # insertar en posición 5
+python .tools/sync_manifiesto.py                       # sincronizar YAML
+python .tools/sync_manifiesto.py --dry                 # simular
+python .tools/consistency_check.py                     # consistencia global
+python .tools/consistency_check.py --cap XX            # capítulo específico
+python .tools/consistency_check.py --json              # salida JSON
 ```
 
 ---
@@ -389,13 +389,13 @@ Estructura tres actos: setup (01–0X) → confrontación (0X–0Y) → resoluci
 
 ## 16. Ritual de inicio de sesión (OBLIGATORIO)
 
-> **⚠️ Archivos de ejemplo:** Los archivos en `tools/templates/examples/` son demostraciones de la plantilla, no contenido real. Ignorarlos. Rellena los templates vacíos de `Mundo/` y `Escritura/` con tu proyecto.
+> **⚠️ Archivos de ejemplo:** Los archivos en `Plantillas/ejemplos/` son demostraciones de la plantilla, no contenido real. Ignorarlos. Rellena los templates vacíos de `Mundo/` y `Escritura/` con tu proyecto.
 
 > **⚠️ Guarda de primera sesión:** Si el paso 1 muestra `⚡ PRIMERA SESIÓN`, salta el resto del ritual y ve directamente a la **sección 0 (Onboarding)**. Vuelve aquí cuando el proyecto tenga capítulos reales y seguimiento.
 
 Al empezar CUALQUIER sesión de edición/escritura, ejecutar estos pasos en orden:
 
-1. **`python tools/session_check.py`** — resumen de qué cambió desde la última sesión
+1. **`python .tools/session_check.py`** — resumen de qué cambió desde la última sesión
 2. **`editorial_letter(beta=true)`** — carta editorial sintética con todas las analíticas
 3. **`get_foreshadowing()`** — ledger completo de siembras y pagos
 4. **Leer `Referencias/Estado.md`** — scores pre-cambio, puntos débiles conocidos

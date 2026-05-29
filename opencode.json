@@ -26,7 +26,7 @@
   "mcp": {
     "fiction-context": {
       "type": "local",
-      "command": ["python3", "tools/fiction_mcp.py"],
+      "command": ["python3", ".tools/fiction_mcp.py"],
       "enabled": true,
       "description": "Contexto de escritura: personajes, lore, continuidad, foreshadowing"
     }
