@@ -1,13 +1,9 @@
 {
   "description": "Perfiles de voz de personajes para check_voice_consistency y editorial_letter.",
   "profiles": {
-    "Protagonista": {
-      "esperado": "Describe el patrón de habla (ej. preguntativa, imperativa, formal...)",
-      "checks": [["preguntas", null], ["imperativos", null]]
-    },
-    "Antagonista": {
-      "esperado": "Describe el patrón de habla del antagonista",
-      "checks": [["elipsis", null], ["longitud_media", null]]
+    "_Lyra": {
+      "esperado": "Preguntativa, reflexiva. Habla en voz alta para ordenar sus pensamientos. Frases cortas cuando se concentra, más elaboradas cuando describe.",
+      "checks": [["preguntas", null], ["longitud_media", 12]]
     }
   }
 }

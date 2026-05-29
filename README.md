@@ -34,6 +34,9 @@ cd mi-libro
 
 Typewriter Mode y Typographer ya vienen preconfigurados (comillas, rayado, scroll de enfoque).
 
+El repositorio incluye **archivos de ejemplo** (prefijo `_`) en `Mundo/`, `Escritura/` y `Referencias/`
+para que veas cómo se estructura una bóveda funcional. Bórralos cuando empieces tu propio proyecto.
+
 El MCP server se registra automáticamente desde `opencode.json`.
 
 ## Trabajar con la IA: tu editor de viaje
@@ -105,6 +108,25 @@ Y si en algún momento sientes que no te entiende, que te da consejos genéricos
 3. Escribes en Obsidian (o en cualquier editor de texto)
 
 El editor se encarga del resto.
+
+## Ejemplos incluidos
+
+El repositorio viene con un mini-ejemplo para que veas cómo encajan las piezas:
+
+| Archivo | Muestra |
+|---|---|
+| `Mundo/Personajes/_Lyra.md` | Ficha de personaje con voz, apariencia, citas |
+| `Mundo/Lugares/_Vale de los Ecos.md` | Ubicación con atmósfera, historia, lugares de interés |
+| `Mundo/Historia/_El Eco.md` | Lore: reglas del fenómeno mágico |
+| `Escritura/01 - El susurro.md` | Capítulo con metadatos YAML, wikilinks y diálogo |
+| `Escritura/manifiesto.json` | Registro de capítulos que leen las tools |
+| `Referencias/Trama principal.md` | Esquema argumental con wikilinks |
+| `Referencias/Cronología.md` | Línea temporal |
+| `Referencias/Foreshadowing.md` | Ledger de siembras y pagos |
+| `.fiction/config.json` | Configuración: acts, POV, rutas |
+| `.fiction/voice_profiles.json` | Perfil de voz de Lyra |
+
+Los ejemplos usan prefijo `_` para distinguirse de tu contenido. Bórralos cuando empieces.
 
 ## Windows
 
