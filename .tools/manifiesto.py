@@ -2,7 +2,7 @@
 """
 manifiesto.py — Orden canónico de capítulos.
 
-El archivo Escritura/manifiesto.json define el orden narrativo.
+El archivo Capítulos/manifiesto.json define el orden narrativo.
 Cada tool importa este módulo para saber qué capítulos existen y en qué orden.
 
 Sincronización con YAML:

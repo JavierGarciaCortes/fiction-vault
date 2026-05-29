@@ -1167,9 +1167,9 @@ def compare_versions(old_dir: str | None = None, new_dir: str | None = None) -> 
     if not old_dir:
         return ("# Comparación de Versiones\n\n"
                 "Usa --old_dir RUTA para comparar con una versión anterior.\n"
-                "Ejemplo: --old_dir /ruta/a/copia/seguridad/Escritura\n"
-                "         --new_dir /ruta/a/version/actual/Escritura (opcional, defecto: actual)\n")
+"Ejemplo: --old_dir /ruta/a/copia/seguridad/Capítulos\n"
 
+                "         --new_dir /ruta/a/version/actual/Capítulos (opcional, defecto: actual)\n")
     old_path = Path(old_dir)
     if not old_path.exists():
         return f"Directorio antiguo no encontrado: {old_dir}"

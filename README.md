@@ -34,11 +34,11 @@ cd mi-libro
 
 Typewriter Mode y Typographer ya vienen preconfigurados (comillas, rayado, scroll de enfoque).
 
-El repositorio incluye **archivos de ejemplo** (prefijo `_`) en `Mundo/`, `Escritura/` y `Referencias/`
+El repositorio incluye **archivos de ejemplo** (prefijo `_`) en `Mundo/`, `Capítulos/` y `Referencias/`
 para que veas cómo se estructura una bóveda funcional. Bórralos cuando empieces tu propio proyecto.
 
 **Los nombres de archivo de capítulos no llevan número** — el orden y numeración se definen
-en `Escritura/manifiesto.json` y en el YAML de cada capítulo (`capítulo: N`). Así puedes
+en `Capítulos/manifiesto.json` y en el YAML de cada capítulo (`capítulo: N`). Así puedes
 insertar, renombrar y reordenar sin romper nada.
 
 El MCP server se registra automáticamente desde `opencode.json`.
@@ -126,7 +126,7 @@ La bóveda viene con **directorios vacíos** listos para rellenar y una carpeta 
 | `Plantillas/patrones.json` | Patrones de prosa para el scanner |
 | `Plantillas/config.json` | Template de `.fiction/config.json` |
 | `Plantillas/ejemplos/` | Ejemplos rellenos (solo referencia visual) |
-| `Escritura/manifiesto.json` | Registro de capítulos (orden narrativo) |
+| `Capítulos/manifiesto.json` | Registro de capítulos (orden narrativo) |
 | `Mundo/Personajes/` | Crear un `.md` por personaje |
 | `Mundo/Lugares/` | Crear un `.md` por ubicación |
 | `Mundo/Historia/` | Lore, magia, cronología interna |
@@ -243,7 +243,7 @@ python .tools/session_check.py --json   # salida JSON
 
 ### `new_chapter.py` — Creador de capítulos
 
-Crea un nuevo capítulo desde plantilla, lo registra en `Escritura/manifiesto.json`
+Crea un nuevo capítulo desde plantilla, lo registra en `Capítulos/manifiesto.json`
 y genera el archivo `.md` en la ubicación correcta.
 
 ```bash
@@ -255,7 +255,7 @@ python .tools/new_chapter.py --list                     # listar capítulos exis
 
 ### `sync_manifiesto.py` — Sincronización YAML
 
-Lee `Escritura/manifiesto.json` y sincroniza el orden y metadatos en los
+Lee `Capítulos/manifiesto.json` y sincroniza el orden y metadatos en los
 frontmatter YAML de cada capítulo.
 
 ```bash

@@ -2,7 +2,7 @@
 """
 sync_manifiesto.py — Sincroniza YAML de capítulos desde el manifiesto.
 
-Lee Escritura/manifiesto.json y actualiza el campo 'capítulo:' en el
+Lee Capítulos/manifiesto.json y actualiza el campo 'capítulo:' en el
 frontmatter YAML de cada archivo de capítulo para que coincida con
 su posición en el orden narrativo.
 
@@ -22,7 +22,7 @@ MANIFIESTO_PATH = CHAPTERS_DIR / "manifiesto.json"
 
 def sync(dry: bool = False):
     if not MANIFIESTO_PATH.exists():
-        print("❌ No se encontró Escritura/manifiesto.json")
+        print("❌ No se encontró Capítulos/manifiesto.json")
         return
 
     import json

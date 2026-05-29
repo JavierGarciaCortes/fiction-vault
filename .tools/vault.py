@@ -47,12 +47,12 @@ VAULT: Path = _find_vault()
 # ---------------------------------------------------------------------------
 
 DEFAULT_CONFIG = {
-    "chapters_dir": "Escritura",
+    "chapters_dir": "Capítulos",
     "references_dirs": ["Referencias"],
     "characters_dirs": ["Personajes"],
     "world_dirs": ["Mundo"],
     "style_dir": "Estilo",
-    "manifest_file": "Escritura/manifiesto.json",
+    "manifest_file": "Capítulos/manifiesto.json",
     "foreshadowing_file": "Referencias/Foreshadowing.md",
     "estado_file": "Referencias/Estado.md",
     "pendientes_file": "Referencias/Pendientes.md",

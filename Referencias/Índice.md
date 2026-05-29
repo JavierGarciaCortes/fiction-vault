@@ -29,4 +29,4 @@
 
 | Cap | Archivo |
 |-----|---------|
-| 01 | `Escritura/01 - *.md` |
+| 01 | `Capítulos/01 - *.md` |

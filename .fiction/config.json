@@ -4,13 +4,9 @@
   "title": "Título de tu libro",
   "author": "Tu nombre",
 
-  "chapters_dir": "Escritura",
-  "references_dirs": ["Referencias"],
-  "characters_dirs": ["Mundo/Personajes"],
-  "world_dirs": ["Mundo"],
-  "style_dir": "Estilo",
+"chapters_dir": "Capítulos",
 
-  "manifest_file": "Escritura/manifiesto.json",
+  "manifest_file": "Capítulos/manifiesto.json",
   "foreshadowing_file": "Referencias/Foreshadowing.md",
   "estado_file": "Referencias/Estado.md",
   "pendientes_file": "Referencias/Pendientes.md",

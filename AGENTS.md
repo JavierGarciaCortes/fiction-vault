@@ -23,7 +23,7 @@ al workflow de revisión estándar**. En su lugar:
    - Para empezar a escribir desde cero: crear primer capítulo con `new_chapter.py`
    - Para planificar antes de escribir: rellenar `Trama principal.md`, `Cronología.md` y fichas de personajes en `Mundo/Personajes/`
    - Para explorar el lore: `Mundo/Historia/` para reglas mágicas, geografía, cronología interna
-   - Para seguir sin presión: simplemente escribir en `Escritura/` y dejar que las tools ayuden después
+   - Para seguir sin presión: simplemente escribir en `Capítulos/` y dejar que las tools ayuden después
 
 3. **Pregunta si quiere configurar algo**:
    - `.fiction/config.json` — acts, POV por defecto, midpoint
@@ -45,7 +45,7 @@ hacer con la herramienta y elija por dónde empezar.
 ## 1. Estructura de la bóveda
 
 ```
-├── Escritura/           # Capítulos + manifiesto.json (orden narrativo)
+├── Capítulos/           # Capítulos + manifiesto.json (orden narrativo)
 ├── Mundo/
 │   ├── Personajes/      # Fichas de personaje
 │   ├── Lugares/         # Geografía y localizaciones
@@ -78,7 +78,7 @@ hacer con la herramienta y elija por dónde empezar.
 │   ├── patrones.json
 │   ├── config.json, character_states.json, consistency.json, continuity.json
 │   └── ejemplos/             # Ejemplos rellenos (misma estructura que el vault)
-│       ├── Escritura/
+│       ├── Capítulos/
 │       ├── Mundo/
 │       │   ├── Personajes/
 │       │   ├── Lugares/
@@ -169,7 +169,7 @@ Patrones en `Estilo/patrones.json`. Categorías:
 
 ## 4. Workflow de revisión <!-- PROYECTO — adapta los capítulos a tu libro -->
 
-> **⚠️ Archivos de ejemplo:** Los archivos en `Plantillas/ejemplos/` son demostraciones de la plantilla, no contenido real. Ignorarlos. Los templates vacíos en `Mundo/` y `Escritura/` son los que debes rellenar con tu proyecto.
+> **⚠️ Archivos de ejemplo:** Los archivos en `Plantillas/ejemplos/` son demostraciones de la plantilla, no contenido real. Ignorarlos. Los templates vacíos en `Mundo/` y `Capítulos/` son los que debes rellenar con tu proyecto.
 
 ### ⚠️ Regla fundamental: quién escribe
 
@@ -292,7 +292,7 @@ Después de CUALQUIER modificación (editar prosa, crear/renumerar capítulos, a
 3. **Story bible** — personajes, lugares, historia, cronología, trama si se tocó lore o eventos
 4. **`.fiction/`** — consistency.json, character_states.json si se tocó tiempo/clima/estados
 5. **`.opencode/skills/editorial_skill.md`** — si se añadieron nuevas tools, flags o flujos
-6. **`Escritura/manifiesto.json`** — si se insertó/eliminó/reordenó un capítulo
+6. **`Capítulos/manifiesto.json`** — si se insertó/eliminó/reordenó un capítulo
 7. **Ejecutar `sync_manifiesto.py`** tras modificar manifiesto
 8. **Ejecutar `prose_scanner.py --validate`** después de modificar `patrones.json`
 
@@ -394,7 +394,7 @@ Estructura tres actos: setup (01–0X) → confrontación (0X–0Y) → resoluci
 
 ## 16. Ritual de inicio de sesión (OBLIGATORIO)
 
-> **⚠️ Archivos de ejemplo:** Los archivos en `Plantillas/ejemplos/` son demostraciones de la plantilla, no contenido real. Ignorarlos. Rellena los templates vacíos de `Mundo/` y `Escritura/` con tu proyecto.
+> **⚠️ Archivos de ejemplo:** Los archivos en `Plantillas/ejemplos/` son demostraciones de la plantilla, no contenido real. Ignorarlos. Rellena los templates vacíos de `Mundo/` y `Capítulos/` con tu proyecto.
 
 > **⚠️ Guarda de primera sesión:** Si el paso 1 muestra `⚡ PRIMERA SESIÓN`, salta el resto del ritual y ve directamente a la **sección 0 (Onboarding)**. Vuelve aquí cuando el proyecto tenga capítulos reales y seguimiento.
 

@@ -9,7 +9,7 @@
 
 Al empezar cualquier sesión de edición/escritura, en este orden exacto. No saltarse pasos. Si la sesión es solo de consulta, omitir pasos 4-5.
 
-1. **`python tools/session_check.py`** — diff desde última sesión. Capítulos afectados, cambios en story bible.
+1. **`python .tools/session_check.py`** — diff desde última sesión. Capítulos afectados, cambios en story bible.
 2. **`editorial_letter(beta=true)`** — carta editorial sintética. Foto global: estructura, escenas, hooks, foreshadowing, show/tell. Imprescindible para no perder perspectiva a medida que crece el manuscrito.
 3. **`get_foreshadowing()`** — ledger completo de siembras/pagos. Identificar hilos abiertos antes de tocar prosa.
 4. **Leer `Referencias/Estado.md`** — scores pre-cambio, puntos débiles, pendientes de rondas anteriores.
