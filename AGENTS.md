@@ -70,8 +70,15 @@ hacer con la herramienta y elija por dónde empezar.
 │   ├── character_states.json # Estados de personaje por rango de capítulos
 │   ├── consistency.json      # Objetos, tiempo, clima, atributos, ubicaciones
 │   └── voice_profiles.json   # Perfiles de voz para herramientas de diagnóstico
+├── Plantillas/           # Plantillas para crear contenido
+│   ├── capitulo.md
+│   ├── personaje.md
+│   ├── lugar.md
+│   ├── lore.md
+│   ├── patrones.json
+│   ├── config.json, character_states.json, consistency.json, continuity.json
+│   └── ejemplos/             # Ejemplos rellenos (solo referencia)
 ├── tools/
-│   ├── templates/            # Plantillas (chapter, character, location, patrones, …)
 │   ├── vault.py              # Módulo compartido (vault discovery, text/chapter utils)
 │   ├── fiction_mcp.py        # MCP context server
 │   ├── prose_scanner.py      # Escáner de patrones de prosa
@@ -82,7 +89,8 @@ hacer con la herramienta y elija por dónde empezar.
 │   ├── consistency_check.py  # Verificador de consistencia
 │   ├── session_check.py      # Resumen de cambios entre sesiones
 │   ├── manifiesto.py         # Módulo compartido para leer manifiesto.json
-│   └── sync_manifiesto.py    # Sincroniza YAML desde manifiesto
+│   ├── sync_manifiesto.py    # Sincroniza YAML desde manifiesto
+│   └── editorial_skill.md    # Skill de edición para el asistente
 ├── opencode.json
 └── AGENTS.md
 ```

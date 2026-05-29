@@ -60,7 +60,7 @@ DEFAULT_CONFIG = {
     "continuity_file": ".fiction/continuity.json",
     "consistency_file": ".fiction/consistency.json",
     "voice_profiles_file": ".fiction/voice_profiles.json",
-    "templates_dir": "tools/templates",
+    "templates_dir": "Plantillas",
     "output_dir": "output",
 }
 

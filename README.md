@@ -115,19 +115,23 @@ El editor se encarga del resto.
 
 ## Estructura inicial
 
-La bóveda viene con **templates vacíos** en los directorios de contenido (`Mundo/Personajes/`, `Mundo/Lugares/`, `Mundo/Historia/`, `Escritura/`) y **ejemplos rellenos** en `tools/templates/examples/` para que veas el formato:
+La bóveda viene con **directorios vacíos** listos para rellenar y una carpeta `Plantillas/` con todo lo necesario para empezar:
 
 | Ubicación | Propósito |
 |---|---|
-| `tools/templates/` | Plantillas vacías para crear personajes, lugares, lore y capítulos |
-| `tools/templates/examples/` | Ejemplos rellenos (personaje, lugar, lore, capítulo) — solo referencia |
-| `Escritura/manifiesto.json` | Registro de capítulos que leen las tools — rellenar con tus archivos |
-| `Mundo/Personajes/` → `tools/templates/character.md` | Crear un `.md` por personaje |
-| `Mundo/Lugares/` → `tools/templates/location.md` | Crear un `.md` por ubicación |
-| `Mundo/Historia/` → `tools/templates/lore.md` | Lore, magia, cronología interna |
-| `Escritura/` → `tools/templates/chapter.md` | Capítulos con YAML frontmatter |
+| `Plantillas/capitulo.md` | Template para crear capítulos nuevos |
+| `Plantillas/personaje.md` | Template para fichas de personaje |
+| `Plantillas/lugar.md` | Template para ubicaciones |
+| `Plantillas/lore.md` | Template para lore, magia, cronología interna |
+| `Plantillas/patrones.json` | Patrones de prosa para el scanner |
+| `Plantillas/config.json` | Template de `.fiction/config.json` |
+| `Plantillas/ejemplos/` | Ejemplos rellenos (solo referencia visual) |
+| `Escritura/manifiesto.json` | Registro de capítulos (orden narrativo) |
+| `Mundo/Personajes/` | Crear un `.md` por personaje |
+| `Mundo/Lugares/` | Crear un `.md` por ubicación |
+| `Mundo/Historia/` | Lore, magia, cronología interna |
 
-Los `Referencias/` también vienen precargados con cabeceras y secciones guía:
+Los `Referencias/` vienen precargados con cabeceras y secciones guía:
 | Archivo | Propósito |
 |---|---|
 | `Trama principal.md` | Esquema argumental |
@@ -138,7 +142,7 @@ Los `Referencias/` también vienen precargados con cabeceras y secciones guía:
 | `Outliner.md` | Plan estructural: capítulos, POV, decisiones |
 | `Pendientes.md` | Tareas pendientes entre sesiones |
 
-Los ejemplos en `tools/templates/examples/` son solo referencia — no los edites. Los templates vacíos de `Mundo/` y `Escritura/` son los que debes rellenar con tu proyecto.
+Los ejemplos en `Plantillas/ejemplos/` son solo referencia — no los edites ni los muevas.
 
 ## Windows
 

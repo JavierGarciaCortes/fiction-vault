@@ -14,7 +14,7 @@ from pathlib import Path
 
 from vault import VAULT, CHAPTERS_DIR, TEMPLATES_DIR, get_manifiesto
 
-TEMPLATE = TEMPLATES_DIR / "chapter.md"
+TEMPLATE = TEMPLATES_DIR / "capitulo.md"
 
 
 def slugify(text: str) -> str:
