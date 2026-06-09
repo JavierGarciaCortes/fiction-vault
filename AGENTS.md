@@ -55,6 +55,7 @@ hacer con la herramienta y elija por dónde empezar.
 │   ├── Outliner.md           # Word counts, decisiones, hoja de ruta
 │   ├── Índice.md             # Personajes, lugares, conceptos clave
 │   ├── Léxico.md             # Glosario de términos del mundo
+│   ├── Guía carta editorial.md  # Cómo escribir una carta de presentación
 │   ├── Pendientes.md         # Tareas pendientes y prioridades
 │   ├── Cronología.md
 │   ├── Foreshadowing.md
@@ -99,7 +100,13 @@ hacer con la herramienta y elija por dónde empezar.
 │   ├── sync_manifiesto.py    # Sincroniza YAML desde manifiesto
 │   ├── sort_lexico.py        # Ordena alfabéticamente el léxico
 ├── .opencode/
-│   └── skills/               # Skills del asistente (editorial_skill.md)
+│   └── skills/               # Skills del asistente
+│       ├── editorial_skill.md    # Flujos de edición
+│       ├── structurer_skill.md   # Análisis estructural para structurer agent
+│       ├── critico_skill.md      # Revisión implacable para critico agent
+│       ├── lector_skill.md       # Lectura con ojos frescos para lector agent
+│       ├── writer_skill.md       # Escritura y edición de prosa para writer agent
+│       └── query_skill.md        # Creación de cartas editoriales para query agent
 ├── opencode.json
 └── AGENTS.md
 ```
