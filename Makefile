@@ -1,5 +1,5 @@
 PYTHON = python3
-TOOLS = tools
+TOOLS = .tools
 
 .PHONY: scan publish check session letter lint ritual help
 
