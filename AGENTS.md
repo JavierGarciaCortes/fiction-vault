@@ -54,6 +54,7 @@ hacer con la herramienta y elija por dónde empezar.
 │   ├── Trama principal.md
 │   ├── Outliner.md           # Word counts, decisiones, hoja de ruta
 │   ├── Índice.md             # Personajes, lugares, conceptos clave
+│   ├── Léxico.md             # Glosario de términos del mundo
 │   ├── Pendientes.md         # Tareas pendientes y prioridades
 │   ├── Cronología.md
 │   ├── Foreshadowing.md
@@ -75,6 +76,7 @@ hacer con la herramienta y elija por dónde empezar.
 │   ├── personaje.md
 │   ├── lugar.md
 │   ├── lore.md
+│   ├── lexico.md          # Plantilla de léxico con tablas por categoría
 │   ├── patrones.json
 │   ├── config.json, character_states.json, consistency.json, continuity.json
 │   └── ejemplos/             # Ejemplos rellenos (misma estructura que el vault)
@@ -95,6 +97,7 @@ hacer con la herramienta y elija por dónde empezar.
 │   ├── session_check.py      # Resumen de cambios entre sesiones
 │   ├── manifiesto.py         # Módulo compartido para leer manifiesto.json
 │   ├── sync_manifiesto.py    # Sincroniza YAML desde manifiesto
+│   ├── sort_lexico.py        # Ordena alfabéticamente el léxico
 ├── .opencode/
 │   └── skills/               # Skills del asistente (editorial_skill.md)
 ├── opencode.json
@@ -313,6 +316,7 @@ make insights           # análisis avanzado (todos los módulos)
 make session            # session check
 make consistency        # consistencia global
 make sync               # sincronizar YAML desde manifiesto
+make sort-lexico        # ordenar alfabéticamente el léxico
 make lint               # ruff check
 make format             # ruff format
 ```
@@ -340,6 +344,7 @@ python .tools/sync_manifiesto.py --dry                 # simular
 python .tools/consistency_check.py                     # consistencia global
 python .tools/consistency_check.py --cap XX            # capítulo específico
 python .tools/consistency_check.py --json              # salida JSON
+python .tools/sort_lexico.py                           # ordenar alfabéticamente el léxico
 ```
 
 ---

@@ -88,6 +88,9 @@ sync:  ## Sincronizar YAML de capítulos desde el manifiesto
 sync-dry:  ## Simular sincronización
 	$(PYTHON) $(TOOLS)/sync_manifiesto.py --dry
 
+sort-lexico:  ## Ordenar alfabéticamente el léxico
+	$(PYTHON) $(TOOLS)/sort_lexico.py
+
 lint:  ## Lint de las tools Python
 	@which ruff >/dev/null 2>&1 && ruff check $(TOOLS)/*.py || echo "ruff no instalado. Omite."
 
