@@ -55,7 +55,7 @@ except ImportError:
 
 from vault import (
     VAULT, CHAPTERS_DIR, CHARACTERS_DIRS, FORESHADOWING_FILE,
-    CONSISTENCY_FILE, CONFIG_FILE, get_chapter_files,
+    CONFIG_FILE, get_chapter_files,
     get_chapter_number, strip_yaml, strip_wikilinks,
 )
 
@@ -107,6 +107,15 @@ def _load_acts_config() -> tuple[dict, dict, dict, int]:
 
 
 ACTS, ACT_LABELS, POV_MAP, MIDPOINT_CHAPTER, DEFAULT_POV = _load_acts_config()
+
+
+def _get_project_title() -> str:
+    """Lee el título del proyecto desde .fiction/config.json."""
+    try:
+        from vault import load_config
+        return load_config().get("title", "Sin título")
+    except Exception:
+        return "Sin título"
 
 
 def strip_dialogue(text: str) -> str:
@@ -325,21 +334,18 @@ def _load_character_names() -> dict[str, str]:
                         names[name] = rf"\b({re.escape(first)}|{escaped})\b"
                     else:
                         names[name] = rf"\b{escaped}\b"
-    # 2. Desde voice_profiles.json
-    vp_file = VAULT / ".fiction" / "voice_profiles.json"
-    if vp_file.exists():
-        try:
-            vp_data = json.loads(vp_file.read_text("utf-8"))
-            for char_name in vp_data.get("profiles", {}):
-                if char_name not in names:
+    # 2. Desde las fichas de personaje
+    for d in CHARACTERS_DIRS:
+        if d.is_dir():
+            for f in d.glob("*.md"):
+                char_name = f.stem
+                if char_name and not char_name.startswith("_") and char_name not in names:
                     first = char_name.split()[0]
                     escaped = re.escape(char_name)
                     if " " in char_name:
                         names[char_name] = rf"\b({re.escape(first)}|{escaped})\b"
                     else:
                         names[char_name] = rf"\b{escaped}\b"
-        except (json.JSONDecodeError, KeyError):
-            pass
     # 3. Fallback: nombres hardcoded mínimos para funcionalidad básica
     if not names:
         names = {"Protagonista": r"\b(ella|él|protagonista)\b"}
@@ -347,9 +353,8 @@ def _load_character_names() -> dict[str, str]:
 
 
 def _load_dialogue_markers() -> dict[str, dict]:
-    """Carga marcadores de diálogo desde voice_profiles.json, o usa defaults."""
-    vp_file = VAULT / ".fiction" / "voice_profiles.json"
-    default_markers = {
+    """Marcadores de diálogo por tipo para análisis de voz."""
+    return {
         "questions": r"\b¿[^¿]*\?",
         "conditionals": r"\b(si\s+|quizá|tal\s+vez|a\s+lo\s+mejor)\b",
         "imperatives": r"\b(cállate|vamos|dame|mira|escucha|ven|no\s+\w+|siéntate|levántate|termina|suelta|deja)\b",
@@ -357,15 +362,6 @@ def _load_dialogue_markers() -> dict[str, dict]:
         "evasions": r"\b(no\s+lo\s+sé|quizá|puede\s+que|tal\s+vez|depende|es\s+complicado)\b",
         "pauses": r"\.\.\.",
     }
-    if vp_file.exists():
-        try:
-            data = json.loads(vp_file.read_text("utf-8"))
-            markers = data.get("dialogue_markers", {})
-            if markers:
-                return markers
-        except (json.JSONDecodeError, KeyError):
-            pass
-    return default_markers
 
 
 CHARACTER_NAMES = _load_character_names()
@@ -570,8 +566,9 @@ def analyze_scene_function(chapters: list[dict]) -> dict:
 
             # Detect functions
             advances_plot = bool(re.search(
-                r"\b(marca|abismo|kael|piedra|verso|maldición|profecía|cataclismo|"
-                r"custodia|ruinas|templo)\b",
+                r"\b(descubrió|reveló|decidió|confrontó|escapó|traicionó|entregó|"
+                r"robó|mató|destruyó|salvó|traicionó|mintió|confesó|negoció|"
+                r"cambió|abandonó|unió|separó|anunció|declaró|ordenó)\b",
                 scene_lower,
             ))
             deepens_character = bool(re.search(
@@ -1266,7 +1263,7 @@ def generate_beta_synthesis(chapters: list[dict]) -> str:
     lines = []
     lines.append("# Informe Editorial Profesional")
     lines.append("")
-    lines.append(f"**Las Tierras Quebradas** — {struct['total_words']} palabras, "
+    lines.append(f"**{_get_project_title()}** — {struct['total_words']} palabras, "
                  f"{struct['total_chapters']} capítulos")
     lines.append("")
 
@@ -1438,7 +1435,7 @@ def generate_letter(chapters: list[dict], cap_filter: int | None = None) -> str:
         return _letter_for_chapter(chapters[0], prose, voice)
 
     lines = []
-    lines.append("# Carta Editorial — Las Tierras Quebradas")
+    lines.append(f"# Carta Editorial — {_get_project_title()}")
     lines.append("")
     lines.append(f"> Generada automáticamente el {_today()}")
     lines.append("")
@@ -1707,7 +1704,7 @@ def _first_dialogue_chapter(chapters: list[dict], char_name: str) -> int | None:
         # Limpiar wikilinks para evitar falsos positivos con topónimos
         text_clean = re.sub(r"\[\[([^\]|]+)\]\]", r"\1", text)
 
-        # Evitar confusiones con topónimos que contengan el nombre (ej. Kael-Thar)
+        # Evitar confusiones con topónimos compuestos que contengan el nombre del personaje
         text_clean = re.sub(rf"\b{re.escape(char_name)}-\w+\b", "CIUDAD", text_clean,
                             flags=re.IGNORECASE)
 
@@ -1844,18 +1841,17 @@ def _generate_priorities(
             chapter_title = next(
                 (c["title"] for c in chapters if c["num"] == cn), ""
             )
-            # Detectar personaje con perfil preguntativo desde voice_profiles.json
-            vp_file = VAULT / ".fiction" / "voice_profiles.json"
+            # Detectar personaje con perfil preguntativo desde las fichas
             voice_name = "personaje"
-            if vp_file.exists():
-                try:
-                    vp_data = json.loads(vp_file.read_text("utf-8"))
-                    for n, p in vp_data.get("profiles", {}).items():
-                        if "pregunt" in p.get("esperado", "").lower():
-                            voice_name = n
+            for d in CHARACTERS_DIRS:
+                if d.is_dir():
+                    for f in d.glob("*.md"):
+                        if f.stem.startswith("_") or f.stem.startswith("."):
+                            continue
+                        content = f.read_text("utf-8")
+                        if "Voz" in content and any(w in content.lower() for w in ["pregunta", "duda", "cuestiona", "preguntativ"]):
+                            voice_name = f.stem
                             break
-                except (json.JSONDecodeError, KeyError):
-                    pass
             priorities.append({
                 "severity": "baja",
                 "issue": f"Capítulo {cn:02d}: {v['pct_questions']}% del diálogo son preguntas",
@@ -1945,7 +1941,7 @@ def generate_json(chapters: list[dict], cap_filter: int | None = None) -> str:
     show_tell = analyze_show_dont_tell(chapters)
 
     output = {
-        "title": "Las Tierras Quebradas",
+        "title": _get_project_title(),
         "structure": struct,
         "prose": prose,
         "voice": voice,

@@ -1,7 +1,7 @@
 PYTHON = python3
-TOOLS = tools
+TOOLS = .tools
 
-.PHONY: scan publish check session letter lint ritual help
+.PHONY: scan publish check session letter lint ritual ready help
 
 # ── Scanner ────────────────────────────────────────────────────────────────
 
@@ -88,13 +88,20 @@ sync:  ## Sincronizar YAML de capítulos desde el manifiesto
 sync-dry:  ## Simular sincronización
 	$(PYTHON) $(TOOLS)/sync_manifiesto.py --dry
 
+sort-lexico:  ## Ordenar alfabéticamente el léxico
+	$(PYTHON) $(TOOLS)/sort_lexico.py
+
 lint:  ## Lint de las tools Python
 	@which ruff >/dev/null 2>&1 && ruff check $(TOOLS)/*.py || echo "ruff no instalado. Omite."
 
 # ── Ritual completo de inicio ──────────────────────────────────────────────
 
-ritual:  ## Ritual de inicio de sesión: session + letter + foreshadowing
+ritual:  ## Ritual de inicio de sesión: session + letter + foreshadowing + session_log
 	$(PYTHON) $(TOOLS)/session_check.py --full
+	@echo ""
+	@echo "═══════════════════════════════════════════════"
+	@echo "  Siguiente: cat .fiction/session_log.json"
+	@echo "═══════════════════════════════════════════════"
 	@echo ""
 	@echo "═══════════════════════════════════════════════"
 	@echo "  Siguiente: editorial_letter(beta=true)"
@@ -104,7 +111,24 @@ ritual:  ## Ritual de inicio de sesión: session + letter + foreshadowing
 	@echo ""
 	@echo "═══════════════════════════════════════════════"
 	@echo "  Siguiente: get_foreshadowing()"
-	@echo "  → Consultar Referencias/Foreshadowing.md"
+	@echo "  → Consultar vault/Referencias/Foreshadowing.md"
+	@echo "═══════════════════════════════════════════════"
+
+ready:  ## Resumen ejecutivo rápido antes de escribir
+	@echo "═══════════════════════════════════════════════"
+	@echo "  READY — Resumen rápido"
+	@echo "═══════════════════════════════════════════════"
+	$(PYTHON) $(TOOLS)/session_check.py --quick
+	@echo ""
+	@echo "--- .fiction/session_log.json ---"
+	@cat .fiction/session_log.json 2>/dev/null || echo "(vacío)"
+	@echo ""
+	@echo "--- vault/Referencias/Pendientes.md (top 3) ---"
+	@grep -A 5 "^## Alta" vault/Referencias/Pendientes.md | head -8
+	@echo ""
+	@echo "--- Próximo paso recomendado ---"
+	@echo "  make ritual  — chequeo completo"
+	@echo "  make scan    — escanear prosa global"
 	@echo "═══════════════════════════════════════════════"
 
 # ── Ayuda ──────────────────────────────────────────────────────────────────

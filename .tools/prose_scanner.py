@@ -778,11 +778,11 @@ def export_king_all() -> dict:
 # ── Puerta cerrada / abierta ─────────────────────────
 
 
-# ── Análisis Brandon Sanderson ──────────────────────
+# ── Export para MCP: Sanderson ─────────────────────
 
 MAGIC_TERMS = re.compile(
-    r"\b(piedr[ao]|marca|marcad[ao]|verso|canción|abismo|vacío|poder|magia|"
-    r"profecía|maldición)\b",
+    r"\b(magia|mágico|hechizo|conjuro|poder|poderes|encantamiento|"
+    r"maldición|profecía|ritual|invocación|portal|dimensión)\b",
     re.IGNORECASE,
 )
 COST_TERMS = re.compile(
@@ -812,11 +812,10 @@ ESCALATION_YES_BUT = re.compile(
 )
 
 
-def analisis_sanderson(texto: str) -> dict:
-    """Analiza un capítulo según principios de Sanderson."""
+def _analisis_sanderson(texto: str) -> dict:
+    """Analiza un capítulo según principios de Sanderson (uso interno MCP)."""
     palabras = len(texto.split())
 
-    # 1. Magia sin coste
     magic_matches = list(MAGIC_TERMS.finditer(texto))
     total_magic = len(magic_matches)
     sin_cost = 0
@@ -827,19 +826,14 @@ def analisis_sanderson(texto: str) -> dict:
         if not COST_TERMS.search(window):
             sin_cost += 1
 
-    # 2. Proactividad
     activos = ACTIVE_VERBS.findall(texto)
     pasivos = PASSIVE_VERBS.findall(texto)
     total_activos = len(activos)
     total_pasivos = len(pasivos)
-    ratio_proactividad = round(
-        total_activos / (total_pasivos + 1), 2
-    )
+    ratio_proactividad = round(total_activos / (total_pasivos + 1), 2)
 
-    # 3. Escalación Sí-pero / No-y (final de párrafos)
     escalacion = len(ESCALATION_YES_BUT.findall(texto))
 
-    # 4. Coste mencionado (% de términos mágicos con coste cerca)
     pct_con_cost = round(
         ((total_magic - sin_cost) / total_magic * 100) if total_magic else 0, 1
     )
@@ -855,87 +849,6 @@ def analisis_sanderson(texto: str) -> dict:
     }
 
 
-def reporte_sanderson(caps_data: list):
-    """Imprime reporte Brandon Sanderson con diagnóstico y recomendaciones."""
-    print("=" * 70)
-    print("  🏗️  Informe Brandon Sanderson — Promesa, Progreso, Pago")
-    print("=" * 70)
-    print()
-    print("  «Las limitaciones importan más que los poderes.»")
-    print("  «El segundo borrador = primero − 10%.»")
-    print()
-
-    print(f"  {'Cap':<6} {'Magia':>6} {'SinCost':>7} {'ConCost%':>8} {'Activo':>6} {'Pasivo':>7} {'Ratio':>6} {'Escal.':>6}  Diagnóstico")
-    print("  " + "-" * 95)
-    for d in caps_data:
-        texto = open(ESCRITURA / d["archivo"], encoding="utf-8").read()
-        s = analisis_sanderson(texto)
-
-        # Diagnóstico
-        diags = []
-        if s["magic_without_cost"] > 3:
-            diags.append("magia sin coste")
-        if s["proactivity_ratio"] < 0.8:
-            diags.append("POV reactivo")
-        if s["escalation_markers"] < 3:
-            diags.append("poca escalación")
-        diag_str = "; ".join(diags[:2]) if diags else "✓"
-
-        print(f"  {d['cap']:<6} {s['magic_terms']:>6} {s['magic_without_cost']:>7} "
-              f"{s['pct_with_cost']:>7}% "
-              f"{s['active_verbs']:>6} {s['passive_verbs']:>7} {s['proactivity_ratio']:>6} "
-              f"{s['escalation_markers']:>6}  {diag_str}")
-    print()
-
-    print("=" * 70)
-    print("  🏗️  Diagnóstico global")
-    print("=" * 70)
-    print("  «Cada lector abandona un libro cuando no hay señales de progreso.»")
-    print()
-
-    # Recomendaciones basadas en promedios
-    total_sin_cost = sum(
-        analisis_sanderson(open(ESCRITURA / d["archivo"], encoding="utf-8").read())["magic_without_cost"]
-        for d in caps_data
-    )
-    total_act = sum(
-        analisis_sanderson(open(ESCRITURA / d["archivo"], encoding="utf-8").read())["active_verbs"]
-        for d in caps_data
-    )
-    total_pas = sum(
-        analisis_sanderson(open(ESCRITURA / d["archivo"], encoding="utf-8").read())["passive_verbs"]
-        for d in caps_data
-    )
-
-    if total_sin_cost > 10:
-        print(f"  🚩 Magia sin coste: {total_sin_cost} ocurrencias.")
-        print("     → 2ª Ley de Sanderson: las limitaciones importan más que los poderes.")
-        print("     → Cada término mágico debería tener un coste, límite o debilidad visible.")
-        print()
-    else:
-        print(f"  ✓ Magia con coste bien gestionada ({total_sin_cost} sin coste).")
-        print()
-
-    ratio_global = total_act / (total_pas + 1)
-    if ratio_global < 1.0:
-        print(f"  🚩 POV reactivo: ratio proactividad {ratio_global:.1f} (activos/pasivos).")
-        print("     → Sanderson: el protagonista debe tomar decisiones, no solo reaccionar.")
-        print()
-    else:
-        print(f"  ✓ POV mayormente activo (ratio {ratio_global:.1f}).")
-        print()
-
-    print("  Recomendación estructural:")
-    print("     Asegúrate de que cada capítulo:")
-    print("     1. Planta una promesa (al inicio).")
-    print("     2. Muestra progreso (en medio).")
-    print("     3. Prepara un pago o una complicación (al final).")
-    print()
-
-
-# ── Export para MCP ──────────────────────────────────
-
-
 def export_sanderson(num: str) -> dict | None:
     """Exporta análisis Sanderson de un capítulo para MCP."""
     caps = listar_capitulos()
@@ -946,7 +859,7 @@ def export_sanderson(num: str) -> dict | None:
             continue
         with open(archivo, encoding="utf-8") as f:
             texto = f.read()
-        s = analisis_sanderson(texto)
+        s = _analisis_sanderson(texto)
         return {
             "cap": num,
             "archivo": archivo.name,
@@ -969,9 +882,12 @@ def export_sanderson_all() -> dict:
             texto = f.read()
         results[num] = {
             "palabras": len(texto.split()),
-            **analisis_sanderson(texto),
+            **_analisis_sanderson(texto),
         }
     return results
+
+
+
 
 
 def filtrar_por_puerta(entry: dict, door_mode: str) -> dict:
@@ -1008,8 +924,6 @@ def main():
                         help="Mostrar estadísticas de ritmo (longitud de frases)")
     parser.add_argument("--king", action="store_true",
                         help="Análisis Stephen King: adverbios en diálogo, voz pasiva, kill your darlings")
-    parser.add_argument("--sanderson", action="store_true",
-                        help="Análisis Brandon Sanderson: magia sin coste, proactividad, escalación")
     parser.add_argument("--door", choices=["closed", "open"], default="open",
                         help="Modo puerta cerrada (solo crítico, primer borrador) o abierta (full, revisión)")
     parser.add_argument("--update-estado", action="store_true",
@@ -1073,10 +987,6 @@ def main():
 
     if args.king:
         reporte_king(caps_data)
-        return
-
-    if args.sanderson:
-        reporte_sanderson(caps_data)
         return
 
     if args.ritmo:

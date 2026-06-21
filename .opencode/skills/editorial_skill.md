@@ -2,6 +2,8 @@
 
 > Instrucciones detalladas para el asistente según el tipo de tarea.
 > Consultar AGENTS.md sección 5 (criterios de edición) y sección 3 (scanner).
+>
+> **Memoria entre sesiones**: `.fiction/session_log.json`. Leerlo al inicio y actualizarlo al cierre.
 
 ---
 
@@ -10,14 +12,18 @@
 Al empezar cualquier sesión de edición/escritura, en este orden exacto. No saltarse pasos. Si la sesión es solo de consulta, omitir pasos 4-5.
 
 1. **`python .tools/session_check.py`** — diff desde última sesión. Capítulos afectados, cambios en story bible.
-2. **`editorial_letter(beta=true)`** — carta editorial sintética. Foto global: estructura, escenas, hooks, foreshadowing, show/tell. Imprescindible para no perder perspectiva a medida que crece el manuscrito.
-3. **`get_foreshadowing()`** — ledger completo de siembras/pagos. Identificar hilos abiertos antes de tocar prosa.
-4. **Leer `Referencias/Estado.md`** — scores pre-cambio, puntos débiles, pendientes de rondas anteriores.
-5. **Para cada capítulo a editar**: `get_chapter_context(num)` + `get_character(POV, num)` + `get_location(relevante)` antes de tocar el archivo.
+2. **`cat .fiction/session_log.json`** — leer decisiones, archivos tocados y preguntas abiertas de la sesión anterior. Recuperar contexto inmediato.
+3. **`editorial_letter(beta=true)`** — carta editorial sintética. Foto global: estructura, escenas, hooks, foreshadowing, show/tell. Imprescindible para no perder perspectiva a medida que crece el manuscrito.
+4. **`get_foreshadowing()`** — ledger completo de siembras/pagos. Identificar hilos abiertos antes de tocar prosa.
+5. **Leer `vault/Referencias/Estado.md`** — scores pre-cambio, puntos débiles, pendientes de rondas anteriores.
+6. **Para cada capítulo a editar**: `get_chapter_context(num)` + `get_character(POV, num)` + `get_location(relevante)` antes de tocar el archivo.
 
 ### ⚠️ Regla de oro
 
 El editor NUNCA responde de memoria sobre datos del worldbuilding (personaje, lugar, regla mágica, evento, hilo). Secuencia obligatoria:
+1. **`vault/Referencias/Fundamentos.md`** — base canónica. Si hay conflicto, gana Fundamentos.
+2. **Tools MCP** — `get_character`, `get_location`, `search_bible`, `get_foreshadowing`, etc.
+3. **Solo después** de leer la respuesta, emitir juicio.
 
 1. Consultar la tool MCP correspondiente
 2. Solo DESPUÉS de leer la respuesta, emitir juicio o edición
@@ -96,7 +102,7 @@ Preguntar "¿Aplico?" antes de cada cambio. El usuario decide individualmente si
 3. Revisar manualmente contra el perfil de voz en AGENTS.md sección 6
 
 ### Qué revisar
-- **Patrón dominante**: ¿el personaje habla como debería? (ej: Lena pregunta 80% del tiempo; Sera da órdenes cortas)
+- **Patrón dominante**: ¿el personaje habla como debería? (ej: protagonista pregunta 80% del tiempo; antagonista da órdenes cortas)
 - **NUNCA diría**: frases que rompen la identidad del personaje
 - **Info-dumps en diálogo**: ¿el personaje está soltando información que ya sabe solo para informar al lector?
 - **Atribuciones**: ¿demasiadas? ¿faltan? ¿son siempre "dijo" o siempre "susurró/preguntó/gritó"?
@@ -139,17 +145,39 @@ Preguntar "¿Aplico?" antes de cada cambio. El usuario decide individualmente si
 2. **Consistencia** si se tocó tiempo/clima: `check_consistency(chapter)` + `check_transitions()`
 3. **Voz** si se tocó diálogo: `check_voice_consistency(chapter, character)`
 4. **Actualizar story bible** si se añadieron/quitaron eventos, voces, relaciones o geografía:
-   - `Mundo/Personajes/*.md` — nuevos tics, gestos, revelaciones, cambios de voz
-   - `Mundo/Lugares/*.md` — atmósfera, sonidos, capítulos asociados
-   - `Mundo/Historia/*.md` — lore, magia, cronología
-   - `.fiction/character_states.json` — cambios de estado por rango de capítulos
-   - `.fiction/consistency.json` — objetos nuevos, cambios de clima/tiempo/ubicación
-   - `Referencias/Foreshadowing.md` — nuevas siembras o pagos añadidos al texto
-   - `Referencias/Cronología.md` — si se alteró la línea temporal
-   - `Referencias/Trama principal.md` — si cambió algún arco
-    - `Referencias/Outliner.md` — word counts, decisiones cerradas
-5. **Actualizar `Estado.md`** con nuevos scores
-6. **Actualizar `AGENTS.md`** si se modificó estructura, tools, tabla de caps, reglas POV o puntos débiles
+   - `vault/Referencias/Fundamentos.md` — reglas canónicas, si se tocaron
+   - `vault/Mundo/Historia/*.md` — lore, magia, objetos nuevos, cambios
+   - `vault/Mundo/Personajes/*.md` — nuevos tics, gestos, revelaciones, cambios de voz
+   - `vault/Mundo/Lugares/*.md` — atmósfera, sonidos, capítulos asociados
+   - `vault/Referencias/Foreshadowing.md` — nuevas siembras o pagos añadidos al texto
+   - `vault/Referencias/Cronología.md` — si se alteró la línea temporal
+   - `vault/Referencias/Trama.md` — si cambió algún arco
+   - `vault/Referencias/Outliner.md` — word counts, decisiones cerradas
+5. **Actualizar `vault/Referencias/Estado.md`** con nuevos scores
+6. **Actualizar `.fiction/session_log.json`** — registrar:
+    - Decisiones tomadas (tema, decisión, alternativa descartada)
+    - Archivos tocados
+    - Preguntas abiertas
+    - Siguientes acciones recomendadas
+7. **Actualizar `AGENTS.md`** si se modificó estructura, tools, tabla de caps, reglas POV o puntos débiles
+
+### Protocolo del léxico
+
+Cada vez que se añada un término nuevo al universo (concepto, lugar, personaje, objeto):
+
+1. **Comprobar** si ya está en `vault/Referencias/Léxico.md`
+2. Si no está: **añadirlo** a la categoría correspondiente (Lugares, Lore, Personajes, Conceptos)
+3. **Ejecutar** `make sort-lexico` para reordenar alfabéticamente
+4. Si el término se usó en un capítulo: **verificar** que el wiki link `[[término]]` esté bien formado
+
+### Canon vs. Ideas
+
+Las fichas pueden tener una sección `## Ideas (no canon, posibles direcciones)`. Protocolo:
+
+- **Canon**: lo que está fuera de esa sección. Se usa como fuente de verdad.
+- **Ideas**: material disponible pero no vinculante. Se puede usar si encaja al escribir, pero no hay que justificar su ausencia.
+- Al editar: no tratar las Ideas como lore establecido. Si una idea se vuelve canon, **moverla** fuera de la sección de Ideas.
+- Al delegar al writer: indicar explícitamente si puede usar material de Ideas o solo canon.
 
 ---
 

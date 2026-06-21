@@ -20,7 +20,7 @@
   —¿De verdad? —resopló—. Yo paso.
 - **Raya incisa entre enunciados**: si el verbo dicendi separa dos enunciados completos, el segundo empieza con mayúscula.
   —Confiar —dijo—. Pero no me gusta.
-  —¿Qué hago aquí? —preguntó Lena—. No recuerdo nada.
+  —¿Qué hago aquí? —preguntó—. No recuerdo nada.
 - **Acción corporal sin verbo dicendi**: en párrafo aparte si el diálogo termina.
   —No pienso irme.
   Cerró la puerta de golpe.
@@ -39,7 +39,7 @@
 - **El diálogo real es imperfecto**: las personas dudan, se interrumpen, callan, repiten. Si el diálogo es demasiado correcto, demasiado limpio, demasiado fluido, suena a guión, no a conversación real.
 - **Descripciones de voz** (tono, timbre): van entre rayas como inciso, en minúscula. Son parte del discurso:
   —No —dijo él, la voz cansada—. No puedo más.
-  —Tú —su voz era grave—. Eres la marcada.
+  —Tú —su voz era grave—. Eres quien busco.
 - **Acciones corporales**: misma regla que voz — minúscula tras la raya (salvo nombre propio). Se diferencian en que son acciones independientes, no incisos del discurso:
   —¿De verdad? —resopló—. Yo paso.
   Cuando el diálogo termina, la acción va en párrafo aparte:

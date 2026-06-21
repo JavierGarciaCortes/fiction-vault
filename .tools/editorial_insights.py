@@ -8,7 +8,7 @@ Ofrece 9 módulos de análisis que complementan editorial_letter.py:
     verbos débiles, filter words, nominalizaciones, adj/noun ratio
   • Dialogue Quality   — ratio "dijo" vs creativas, info-dumps, voz
   • Save the Cat       — 15 beats en posiciones correctas
-  • Chekhov's Gun      — objetos sembrados vs pagados
+  • First Pages        — test de primeras 10 páginas
   • First Pages Test   — protagonista, deseo, obstáculo en 10 páginas
   • Backstory Dumps    — párrafos con pluscuamperfecto denso
   • Scene vs Summary   — ratio modo escena / modo resumen
@@ -752,96 +752,7 @@ def _sentiment_at_positions(
 
 
 # ──────────────────────────────────────────────
-#  4.  CHEKHOV'S GUN — OBJETOS
-# ──────────────────────────────────────────────
-
-def analyze_chekhov_gun(chapters: list[dict]) -> dict:
-    """Rastrea objetos nombrados: ¿se siembran? ¿se pagan?
-
-    Detecta:
-    - Objetos presentados con énfasis en el primer acto que no reaparecen
-    - Objetos críticos que aparecen sin siembra previa
-    """
-    # Objetos narrativos conocidos del proyecto
-    KNOWN_OBJECTS = {
-        "piedra blanca": {"aliases": ["piedra blanca", "piedra de memoria", "marca"]},
-        "piedra gris": {"aliases": ["piedra gris", "piedra de la tierra"]},
-        "piedra negra": {"aliases": ["piedra negra"]},
-        "verso": {"aliases": ["verso del errante", "verso"]},
-        "bastón": {"aliases": ["bastón", "bastón del errant", "bastón de madera negra"]},
-    }
-
-    per_chapter = defaultdict(lambda: {"mentions": []})
-    object_first_seen = {}
-    object_last_seen = {}
-    object_mentions = defaultdict(list)
-
-    for c in chapters:
-        text_lower = c["text"].lower()
-        for obj_name, info in KNOWN_OBJECTS.items():
-            for alias in info["aliases"]:
-                for m in re.finditer(re.escape(alias), text_lower):
-                    pos = m.start()
-                    word_pos = len(text_lower[:pos].split()) if pos > 0 else 0
-                    mention = {
-                        "chapter": c["num"],
-                        "word_pos": word_pos,
-                        "context": c["text"][max(0, pos - 20):pos + len(alias) + 40],
-                    }
-                    per_chapter[c["num"]]["mentions"].append({
-                        "object": obj_name,
-                        "alias": alias,
-                        **mention,
-                    })
-                    object_mentions[obj_name].append(mention)
-                    if obj_name not in object_first_seen:
-                        object_first_seen[obj_name] = c["num"]
-                    object_last_seen[obj_name] = c["num"]
-
-    # Objetos presentados en acto 1 (caps 1-4) que no reaparecen en acto 3 (caps 10-12)
-    planted_not_paid = []
-    for obj_name, mentions in object_mentions.items():
-        first = min(m["chapter"] for m in mentions)
-        last = max(m["chapter"] for m in mentions)
-        if first <= 4 and last <= 9:
-            planted_not_paid.append({
-                "object": obj_name,
-                "first_seen": first,
-                "last_seen": last,
-                "total_mentions": len(mentions),
-                "description": (
-                    f"Presentado en capítulo {first}, última mención en capítulo {last}. "
-                    f"No reaparece en la resolución (acto 3)."
-                ),
-            })
-
-    # Objetos que aparecen en acto 3 sin siembra en acto 1
-    unplanted_payoffs = []
-    for obj_name, mentions in object_mentions.items():
-        first = min(m["chapter"] for m in mentions)
-        if first >= 10:
-            unplanted_payoffs.append({
-                "object": obj_name,
-                "first_seen": first,
-                "total_mentions": len(mentions),
-                "description": (
-                    f"Aparece por primera vez en capítulo {first} (acto 3) "
-                    f"sin mención previa."
-                ),
-            })
-
-    return {
-        "objects_tracked": len(KNOWN_OBJECTS),
-        "objects_found": [k for k, v in object_mentions.items() if v],
-        "objects_not_found": [k for k in KNOWN_OBJECTS if not object_mentions.get(k)],
-        "planted_not_paid": planted_not_paid,
-        "unplanted_payoffs": unplanted_payoffs,
-        "per_chapter": dict(per_chapter),
-    }
-
-
-# ──────────────────────────────────────────────
-#  5.  FIRST PAGES TEST
+#  4.  FIRST PAGES TEST
 # ──────────────────────────────────────────────
 
 def analyze_first_pages(chapters: list[dict], protagonist: str | None = None) -> dict:
@@ -1343,10 +1254,21 @@ def analyze_revision_hotspots(chapters: list[dict],
 
 def analyze_all(chapters: list[dict]) -> dict:
     """Ejecuta todos los análisis y devuelve un dict anidado."""
+    if not chapters:
+        return {
+            "style_diagnostics": {},
+            "dialogue_quality": {},
+            "save_the_cat": {},
+            "first_pages_test": {},
+            "backstory_dumps": {},
+            "scene_summary_ratio": {},
+            "revision_hotspots": {},
+            "error": "No se encontraron capítulos.",
+        }
+
     style = analyze_style_diagnostics(chapters)
     dialogue = analyze_dialogue_quality(chapters)
     save_cat = analyze_save_the_cat(chapters)
-    chekhov = analyze_chekhov_gun(chapters)
     first_pages = analyze_first_pages(chapters)
     backstory = analyze_backstory_dumps(chapters)
     scene_summary = analyze_scene_summary_ratio(chapters)
@@ -1356,7 +1278,6 @@ def analyze_all(chapters: list[dict]) -> dict:
         "style_diagnostics": style,
         "dialogue_quality": dialogue,
         "save_the_cat": save_cat,
-        "chekhov_gun": chekhov,
         "first_pages_test": first_pages,
         "backstory_dumps": backstory,
         "scene_summary_ratio": scene_summary,
@@ -1443,27 +1364,10 @@ def format_markdown(data: dict) -> str:
                 lines.append(f"| {b['beat']} | ~cap {cap:02d} | {sig} | {sent} |")
             lines.append("")
 
-    # ── 4. Chekhov's Gun ──
-    if "chekhov_gun" in data:
-        cg = data["chekhov_gun"]
-        lines.append("## 4. Chekhov's Gun — Objetos\n")
-        lines.append(f"- **Objetos rastreados**: {cg.get('objects_tracked', 0)}")
-        lines.append(f"- **Detectados en texto**: {len(cg.get('objects_found', []))}")
-        lines.append(f"- **No detectados**: {', '.join(cg.get('objects_not_found', [])) or 'ninguno'}")
-        if cg.get("planted_not_paid"):
-            lines.append(f"\n⚠️ **Sembrados pero no pagados:**")
-            for pnp in cg["planted_not_paid"]:
-                lines.append(f"- {pnp['object']} (caps {pnp['first_seen']}–{pnp['last_seen']})")
-        if cg.get("unplanted_payoffs"):
-            lines.append(f"\n⚠️ **Pagados sin siembra:**")
-            for up in cg["unplanted_payoffs"]:
-                lines.append(f"- {up['object']} (primera vez cap {up['first_seen']})")
-        lines.append("")
-
-    # ── 5. First Pages Test ──
+    # ── 4. First Pages Test ──
     if "first_pages_test" in data:
         fp = data["first_pages_test"]
-        lines.append("## 5. Test de Primeras Páginas\n")
+        lines.append("## 4. Test de Primeras Páginas\n")
         checkmarks = {
             "Protagonista en 1er párrafo": fp.get("protagonist_in_first_paragraph", False),
             "Deseo explícito en 750 pal": fp.get("desire_in_first_750_words", False),
@@ -1484,7 +1388,7 @@ def format_markdown(data: dict) -> str:
     if "backstory_dumps" in data:
         bd = data["backstory_dumps"]
         bg = bd.get("global", {})
-        lines.append("## 6. Backstory Dumps\n")
+        lines.append("## 5. Backstory Dumps\n")
         lines.append(f"- **Total dumps**: {bg.get('total_dumps', 0)} párrafos ({bg.get('chapters_with_dumps', 0)} caps afectados)")
         lines.append(f"- **Densidad de pluscuamperfecto**: {bg.get('density_per_1k', 0)}/1k pal")
         if bd.get("worst_dumps"):
@@ -1497,7 +1401,7 @@ def format_markdown(data: dict) -> str:
     if "scene_summary_ratio" in data:
         ss = data["scene_summary_ratio"]
         sg = ss.get("global", {})
-        lines.append("## 7. Modo Escena vs Modo Resumen\n")
+        lines.append("## 6. Modo Escena vs Modo Resumen\n")
         lines.append(f"- **Escena**: {sg.get('scene_pct', 0)}% del texto")
         lines.append(f"- **Resumen**: {sg.get('summary_pct', 0)}% del texto")
         lines.append(f"- **Ratio**: {sg.get('scene_to_summary_ratio', 0)}:1 (thriller >2:1, literary ~1:1)")
@@ -1515,7 +1419,7 @@ def format_markdown(data: dict) -> str:
     # ── 8. Story Arc ──
     if "story_arc" in data:
         sa = data["story_arc"]
-        lines.append("## 8. Arco Narrativo (Vonnegut)\n")
+        lines.append("## 7. Arco Narrativo (Vonnegut)\n")
         if sa.get("arc") and sa["arc"] != "unknown" and sa["arc"] != "insuficiente":
             lines.append(f"**Arco detectado**: {sa['arc']} (confianza: {sa.get('confidence', 0)})")
             shape = sa.get("shape", {})
@@ -1530,7 +1434,7 @@ def format_markdown(data: dict) -> str:
     # ── 9. Revision Hotspots ──
     if "revision_hotspots" in data:
         rh = data["revision_hotspots"]
-        lines.append("## 9. Hotspots de Revisión\n")
+        lines.append("## 8. Hotspots de Revisión\n")
         lines.append(f"**Recomendación**: {rh.get('recommendation', '')}\n")
         if rh.get("per_chapter"):
             lines.append("| Cap | Score | Prioridad | Factores |")
@@ -1561,7 +1465,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Insights editoriales avanzados")
     parser.add_argument("--json", action="store_true", help="Salida JSON")
     parser.add_argument("--module", type=str, choices=[
-        "style", "dialogue", "save_cat", "chekhov",
+        "style", "dialogue", "save_cat",
         "first_pages", "backstory", "scene_summary", "arc", "hotspots", "all",
     ], default="all", help="Módulo específico (default: all)")
     args = parser.parse_args()
@@ -1573,7 +1477,6 @@ if __name__ == "__main__":
         "style": lambda: {"style_diagnostics": analyze_style_diagnostics(chapters)},
         "dialogue": lambda: {"dialogue_quality": analyze_dialogue_quality(chapters)},
         "save_cat": lambda: {"save_the_cat": analyze_save_the_cat(chapters)},
-        "chekhov": lambda: {"chekhov_gun": analyze_chekhov_gun(chapters)},
         "first_pages": lambda: {"first_pages_test": analyze_first_pages(chapters)},
         "backstory": lambda: {"backstory_dumps": analyze_backstory_dumps(chapters)},
         "scene_summary": lambda: {"scene_summary_ratio": analyze_scene_summary_ratio(chapters)},

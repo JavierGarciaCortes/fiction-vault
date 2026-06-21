@@ -1,13 +1,20 @@
+
+web/dist/
+web/_site/
+web/.astro/
+web/node_modules/
+web/src/data/vault.json
+web/.vercel/
+*.egg-info/
+# Obsidian (auto-generated, user-specific)
+vault/.obsidian/plugins/*/main.js
+vault/.obsidian/plugins/*/manifest.json
+vault/.obsidian/plugins/*/styles.css
+vault/.obsidian/workspace.json
+vault/.obsidian/workspace-mobile.json
 output/
 __pycache__/
-.venv/
-*.egg-info/
+vault/__pycache__/
 .ruff_cache/
-dist/
-
-# Obsidian (auto-generated, user-specific)
-.obsidian/workspace.json
-.obsidian/workspace-mobile.json
-.obsidian/plugins/*/main.js
-.obsidian/plugins/*/manifest.json
-.obsidian/plugins/*/styles.css
+vault/.ruff_cache/
+.venv/

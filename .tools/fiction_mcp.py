@@ -13,7 +13,7 @@ Tools expuestas:
   get_character(name, chapter?) — perfil de personaje
   get_chapter_context(num)   — metadatos del capítulo
   check_continuity(text, chapter) — valida contra reglas de continuidad
-  check_consistency(chapter) — verifica objetos, tiempo, clima, atributos, ubicaciones
+  check_consistency(chapter) — verifica objetos desde lore, tiempo/clima desde YAML
   get_foreshadowing(thread?) — consulta ledger de siembras/pagos
 """
 
@@ -26,16 +26,15 @@ from typing import Any
 
 from vault import (
     VAULT, CHAPTERS_DIR, REFERENCES_DIRS, CHARACTERS_DIRS, WORLD_DIRS,
-    STYLE_DIR, CHARACTER_STATES_FILE, CONTINUITY_FILE, CONSISTENCY_FILE,
-    VOICE_PROFILES_FILE, FORESHADOWING_FILE,
+    STYLE_DIR, FORESHADOWING_FILE,
     strip_comments, get_chapter_number, get_chapter_title, get_manifiesto,
 )
 
 try:
-    from tools import consistency_check, prose_scanner, editorial_letter
+    from tools import prose_scanner, editorial_letter
 except ImportError:
     sys.path.insert(0, str(Path(__file__).resolve().parent))
-    import consistency_check, prose_scanner, editorial_letter
+    import prose_scanner, editorial_letter
 
 # Editorial insights — módulo avanzado opcional
 HAS_INSIGHTS = False
@@ -313,36 +312,51 @@ class DataStore:
 
 
 # ---------------------------------------------------------------------------
-# Character states (desde .fiction/character_states.json)
+# Character states (lee desde la ficha .md de cada personaje)
 # ---------------------------------------------------------------------------
 
-CHARACTER_STATES: dict[str, list[list]] = {}
-
-
-def _load_character_states():
-    global CHARACTER_STATES
-    if CHARACTER_STATES_FILE and CHARACTER_STATES_FILE.exists():
-        try:
-            data = json.loads(CHARACTER_STATES_FILE.read_text("utf-8"))
-            raw = data.get("characters", {})
-            CHARACTER_STATES = {k.lower(): v for k, v in raw.items()}
-        except (json.JSONDecodeError, KeyError):
-            CHARACTER_STATES = {}
+def _get_character_arc(name: str) -> str:
+    """Extrae la sección 'Arco narrativo' de la ficha del personaje."""
+    profile_text = store.get_source_text(f"{name}.md")
+    if not profile_text:
+        for alt in (f"{name.replace(' ', '_')}.md", f"{name.lower()}.md"):
+            profile_text = store.get_source_text(alt)
+            if profile_text:
+                break
+    if not profile_text:
+        return ""
+    in_arc = False
+    arc_lines = []
+    for line in profile_text.split("\n"):
+        if re.match(r"^##\s+Arco narrativo\s*$", line, re.IGNORECASE):
+            in_arc = True
+            continue
+        if in_arc:
+            if line.strip().startswith("##"):
+                break
+            clean = line.strip()
+            if clean:
+                arc_lines.append(clean)
+    return "\n".join(arc_lines)
 
 
 def get_character_state(name: str, chapter: int) -> str:
-    """Busca el estado de un personaje en un capítulo concreto."""
-    name_lower = name.lower().strip()
-    states = CHARACTER_STATES.get(name_lower, [])
-    for entry in states:
-        if len(entry) >= 3:
-            start, end, note = entry[0], entry[1], entry[2]
-            if start <= chapter <= end:
-                return note
-    return ""
+    """Devuelve el arco narrativo del personaje como contexto para el capítulo."""
+    arc = _get_character_arc(name)
+    if not arc:
+        return ""
+    # Si el arco contiene fases numeradas, mostrar solo la relevante
+    return f"Arco de {name}: {arc}"
 
 
-_load_character_states()
+def get_character_state_hints(chapter: int) -> list[str]:
+    """Devuelve arcos narrativos de todos los personajes con ficha."""
+    hints = []
+    for char_name in _get_available_characters():
+        arc = _get_character_arc(char_name)
+        if arc:
+            hints.append(f"{char_name}: {arc}")
+    return hints
 
 
 # ---------------------------------------------------------------------------
@@ -619,73 +633,32 @@ def check_continuity(text: str, chapter: int) -> str:
     text_lower = text.lower()
     warnings: list[str] = []
 
-    # --- Reglas desde .fiction/continuity.json ---
-    continuity_file = CONTINUITY_FILE
-    if continuity_file and continuity_file.exists():
-        try:
-            rules = json.loads(continuity_file.read_text("utf-8"))
-            for death in rules.get("deaths", []):
-                char_name = death.get("character", "").lower()
-                death_ch = death.get("chapter", 999)
-                if chapter > death_ch and char_name in text_lower:
-                    # Detectar cualquier verbo en tercera persona tras el nombre
-                    # Busca "nombre verbo" (ej. "kael voló", "kael observó")
-                    for alias in death.get("aliases", [char_name]):
-                        if alias in text_lower:
-                            idx = text_lower.index(alias) + len(alias)
-                            rest = text_lower[idx:].strip()
-                            # Si después del nombre viene una palabra de 4+ letras
-                            # que termina en vocal acentuada o consonante (verbo conjugado)
-                            next_word = rest.split()[0] if rest.split() else ""
-                            if next_word and len(next_word) >= 3:
-                                # Verbos típicos en tercera persona (pretérito)
-                                if next_word.endswith(("ó", "ía", "ió", "aba")):
-                                    warnings.append(
-                                        f"⚠ {death['character']} murió en el capítulo {death_ch} "
-                                        f"pero aparece activo aquí (cap {chapter}): "
-                                        f"«{alias} {next_word}». "
-                                        f"Si es flashback, asegura que el marco temporal sea claro."
-                                    )
-                                    break
-                            # Si no termina en verbo típico, usar lista ampliada
-                            for action in ("dijo","caminó","corrió","sonrió","rió","habló","miró",
-                                           "voló","saltó","gritó","susurró","se movió","se giró",
-                                           "observó","señaló","levantó","bajó","empujó","tiró",
-                                           "abrió","cerró","entró","salió","subió","cayó",
-                                           "desapareció","apareció","empezó","terminó","siguió",
-                                           "disparó","golpeó","lanzó","recogió","dejó","tomó",
-                                           "buscó","encontró","oyó","vio","sintió","notó",
-                                           "supo","pudo","quiso","tuvo","hizo","dio","fue",
-                                           "estuvo","anduvo","puso","trajo","dijo","pidió",
-                                           "durmió","vivió","murió","creció","corrió","sonrió",
-                                           "rio","rio",):
-                                if f"{alias} {action}" in text_lower:
-                                    warnings.append(
-                                        f"⚠ {death['character']} murió en el capítulo {death_ch} "
-                                        f"pero aparece activo aquí (cap {chapter}): "
-                                        f"«{alias} {action}». "
-                                        f"Si es flashback, asegura que el marco temporal sea claro."
-                                    )
-                                    break
+    # Leer foreshadowing para buscar muertes y revelaciones conocidas
+    foreshadow_text = store.get_source_text("Foreshadowing.md") or ""
+    foreshadow_lower = foreshadow_text.lower()
 
-            for reveal in rules.get("reveals", []):
-                reveal_ch = reveal.get("chapter", 999)
-                before = reveal.get("before", "").lower()
-                after = reveal.get("after", "").lower()
-                if chapter >= reveal_ch and before in text_lower and after and after not in text_lower:
-                    warnings.append(
-                        f"ℹ {reveal.get('note', f'Desde cap {reveal_ch}, \"{before}\" se conoce como \"{after}\".')}"
-                    )
+    # Detectar personajes mencionados como fallecidos en foreshadowing
+    death_lines = []
+    for line in foreshadow_text.split("\n"):
+        if any(w in line.lower() for w in ("muere", "muerte", "sacrifica", "fallece", "asesinado")):
+            death_lines.append(line)
 
-            for change in rules.get("status_changes", []):
-                change_ch = change.get("chapter", 999)
-                char_name = change.get("character", "").lower()
-                if chapter >= change_ch and char_name in text_lower:
-                    flag = change.get("flag", "")
-                    if flag and flag in text_lower:
-                        warnings.append(f"ℹ {change.get('note', '')}")
-        except (json.JSONDecodeError, KeyError):
-            pass
+    for line in death_lines:
+        for char_name in _get_available_characters():
+            if char_name.lower() in line.lower():
+                char_lower = char_name.lower()
+                if char_lower in text_lower:
+                    idx = text_lower.index(char_lower) + len(char_lower)
+                    rest = text_lower[idx:].strip()
+                    next_word = rest.split()[0] if rest.split() else ""
+                    if next_word and len(next_word) >= 3:
+                        if next_word.endswith(("ó", "ía", "ió", "aba")):
+                            warnings.append(
+                                f"⚠ {char_name} podría estar muerto según foreshadowing, "
+                                f"pero aparece activo en cap {chapter}: «{char_name} {next_word}». "
+                                f"Si es flashback, asegura que el marco temporal sea claro."
+                            )
+                            break
 
     if not warnings:
         return f"Sin problemas de continuidad detectados en capítulo {chapter}."
@@ -750,33 +723,61 @@ def get_foreshadowing(thread: str | None = None) -> str:
     required=["chapter_number"],
 )
 def check_consistency(chapter_number: int) -> str:
-    data = consistency_check.load_consistency()
-    chapter_files = [f for f in consistency_check.get_chapter_files()
-                     if consistency_check.get_chapter_number(f) == chapter_number]
-    if not chapter_files:
+    chapters = _get_chapters(chapter_number)
+    if not chapters:
         return f"Capítulo {chapter_number} no encontrado."
+    c = chapters[0]
+    text = c["text"]
+    clean = text.lower()
+    issues: list[str] = []
+    ch_title = c["title"]
 
-    cf = chapter_files[0]
-    num, raw, clean = consistency_check.read_chapter(cf)
-    title_match = re.search(r"#\s*Capítulo\s+\d+[:\s]*(.+)", raw)
-    title = title_match.group(1).strip() if title_match else ""
+    # 1. Objetos: leer desde vault/Mundo/Historia/
+    for d in WORLD_DIRS:
+        if not d.is_dir():
+            continue
+        for hf in d.glob("*.md"):
+            if hf.stem.startswith("_") or hf.stem.startswith("."):
+                continue
+            htext = hf.read_text("utf-8")
+            # Extraer metadatos del objeto: > **Alias:** ..., > **Dueño:** ...
+            name = hf.stem
+            aliases = [name.lower()]
+            alias_match = re.search(r">\s*\*\*Alias:\*\*\s*(.+)", htext)
+            if alias_match:
+                aliases = [a.strip().lower() for a in alias_match.group(1).split(",")]
+            # Si algún alias aparece en el capítulo, reportar
+            for alias in aliases:
+                if alias in clean:
+                    issues.append(f"ℹ Objeto «{name}» (alias: «{alias}») aparece en este capítulo.")
+                    break
 
-    issues = []
-    issues.extend(consistency_check.check_objects(raw, clean, num, data))
-    issues.extend(consistency_check.check_time(raw, clean, num, data, None))
-    issues.extend(consistency_check.check_weather(raw, clean, num, data))
-    issues.extend(consistency_check.check_attributes(raw, clean, num, data))
-    issues.extend(consistency_check.check_locations(raw, clean, num, data))
+    # 2. Tiempo y clima desde YAML del capítulo
+    yaml_time = ""
+    yaml_weather = ""
+    for line in text.split("\n"):
+        if line.strip().startswith("tiempo:"):
+            yaml_time = line.split(":", 1)[1].strip()
+        if line.strip().startswith("clima:"):
+            yaml_weather = line.split(":", 1)[1].strip()
+        if yaml_time and yaml_weather:
+            break
 
+    if yaml_time:
+        issues.append(f"ℹ Tiempo registrado: «{yaml_time}»")
+    else:
+        issues.append("⚠ Sin campo 'tiempo' en el YAML del capítulo.")
+    if yaml_weather:
+        issues.append(f"ℹ Clima registrado: «{yaml_weather}»")
+    else:
+        issues.append("⚠ Sin campo 'clima' en el YAML del capítulo.")
+
+    result = [f"## Capítulo {chapter_number}: {ch_title}\n"]
     if not issues:
-        return f"## Capítulo {chapter_number}: {title}\n\nSin incidencias de consistencia."
-
-    result = [f"## Capítulo {chapter_number}: {title}\n"]
-    for iss in sorted(issues, key=lambda x: ("error", "warn", "info").index(x["severity"])):
-        label = {"error": "✗ ERROR", "warn": "⚠ WARN", "info": "ℹ INFO"}[iss["severity"]]
-        result.append(f"**{label}** {iss['msg']}")
-        result.append(f"  *{iss['context']}*")
-
+        result.append("Sin incidencias de consistencia.")
+    else:
+        for iss in issues:
+            result.append(f"- {iss}")
     return "\n".join(result)
 
 
@@ -786,15 +787,49 @@ def check_consistency(chapter_number: int) -> str:
     properties={},
 )
 def mcp_check_transitions() -> str:
-    data = consistency_check.load_consistency()
-    issues = consistency_check.check_transitions(data)
+    # Leer tiempo y clima del YAML de cada capítulo
+    chapter_data = []
+    for f in sorted(get_manifiesto().archivos_existentes(), key=lambda x: get_manifiesto().get_numero(x.name) or 0):
+        num = get_manifiesto().get_numero(f.name)
+        if num is None:
+            continue
+        text = f.read_text("utf-8")
+        tiempo = ""
+        clima = ""
+        for line in text.split("\n"):
+            if line.strip().startswith("tiempo:"):
+                tiempo = line.split(":", 1)[1].strip()
+            if line.strip().startswith("clima:"):
+                clima = line.split(":", 1)[1].strip()
+            if tiempo and clima:
+                break
+        chapter_data.append({"num": num, "tiempo": tiempo, "clima": clima})
+
+    if len(chapter_data) < 2:
+        return "## Transiciones entre capítulos\n\nSe necesitan al menos 2 capítulos. ✓"
+
+    issues: list[str] = []
+    for i in range(1, len(chapter_data)):
+        prev = chapter_data[i - 1]
+        curr = chapter_data[i]
+        if curr["num"] != (prev["num"] or 0) + 1:
+            continue
+        # Salto noche → mediodía
+        if "noche" in prev["tiempo"] and "mediodía" in curr["tiempo"]:
+            issues.append(
+                f"⚠ Cap {prev['num']} termina de noche y cap {curr['num']} es mediodía. Transición sin justificación."
+            )
+        # Sin sol → sol
+        if "sin sol" in prev["clima"] and "sol" in curr["clima"]:
+            issues.append(
+                f"ℹ Cambio climático cap {prev['num']}→{curr['num']}: «{prev['clima']}» → «{curr['clima']}». ¿Intencional?"
+            )
+
     if not issues:
         return "## Transiciones entre capítulos\n\nSin incidencias. ✓"
     result = ["## Transiciones entre capítulos\n"]
-    for iss in sorted(issues, key=lambda x: ("error", "warn", "info").index(x["severity"])):
-        label = {"error": "✗ ERROR", "warn": "⚠ WARN", "info": "ℹ INFO"}[iss["severity"]]
-        result.append(f"**{label}** {iss['msg']}")
-        result.append(f"  *{iss['context']}*")
+    for iss in issues:
+        result.append(f"- {iss}")
     return "\n".join(result)
 
 
@@ -892,25 +927,6 @@ def _format_scan_global(all_data: list[dict]) -> str:
     return "\n".join(out)
 
 
-def get_character_state_hints(chapter: int) -> list[str]:
-    """Devuelve lista de estados activos en un capítulo."""
-    hints = []
-    # Leer character_states.json directamente como no está en prose_scanner
-    states_file = CHARACTER_STATES_FILE
-    if states_file and states_file.exists():
-        try:
-            data = json.loads(states_file.read_text("utf-8"))
-            for char_name, states in data.get("characters", {}).items():
-                for entry in states:
-                    if len(entry) >= 3:
-                        start, end, note = entry[0], entry[1], entry[2]
-                        if start <= chapter <= end:
-                            hints.append(f"{char_name}: {note}")
-        except (json.JSONDecodeError, KeyError):
-            pass
-    return hints
-
-
 @server.tool(
     name="editorial_letter",
     description="Genera carta editorial automatizada con análisis profundo: estructura, función de escenas, "
@@ -1001,13 +1017,11 @@ def mcp_editorial_letter(
 # ---------------------------------------------------------------------------
 
 def _get_chapters(chapter: int | None = None) -> list[dict]:
-    """Carga capítulos; si chapter no es None, filtra y valida existencia."""
+    """Carga capítulos; si chapter no es None, filtra. Retorna lista vacía si no encuentra."""
     files = editorial_letter.get_chapter_files()
     chapters = [editorial_letter.read_chapter(f) for f in files]
     if chapter is not None:
         chapters = [c for c in chapters if c["num"] == chapter]
-        if not chapters:
-            raise ValueError(f"Capítulo {chapter} no encontrado.")
     return chapters
 
 
@@ -1025,30 +1039,72 @@ def _fmt_table(headers: list[str], rows: list[list[str]]) -> str:
 # y editorial_insights, exponiéndola como tools individuales.
 # ═══════════════════════════════════════════════════════════════════════════
 
-# Perfiles de voz para check_voice_consistency (data-driven desde .fiction/voice_profiles.json)
-_DEFAULT_VOICE_PROFILES: dict[str, dict] = {}
+# Perfiles de voz para check_voice_consistency (lee desde la ficha .md de cada personaje)
+def _get_character_voice(name: str) -> str:
+    """Extrae la sección 'Voz' de la ficha del personaje."""
+    profile_text = store.get_source_text(f"{name}.md")
+    if not profile_text:
+        for alt in (f"{name.replace(' ', '_')}.md", f"{name.lower()}.md"):
+            profile_text = store.get_source_text(alt)
+            if profile_text:
+                break
+    if not profile_text:
+        return ""
+    in_voz = False
+    voz_lines = []
+    for line in profile_text.split("\n"):
+        if re.match(r"^##\s+Voz\s*$", line, re.IGNORECASE):
+            in_voz = True
+            continue
+        if in_voz:
+            if line.strip().startswith("##"):
+                break
+            clean = line.strip()
+            if clean and not clean.startswith("<!--") and not clean.endswith("-->"):
+                voz_lines.append(clean)
+    return " ".join(voz_lines)
 
 
-def _load_voice_profiles() -> dict[str, dict]:
-    """Carga perfiles de voz desde .fiction/voice_profiles.json o usa defaults."""
-    if VOICE_PROFILES_FILE and VOICE_PROFILES_FILE.exists():
-        try:
-            data = json.loads(VOICE_PROFILES_FILE.read_text("utf-8"))
-            profiles = data.get("profiles", {})
-            if profiles:
-                return {k.lower(): v for k, v in profiles.items()}
-        except (json.JSONDecodeError, KeyError):
-            pass
-    return dict(_DEFAULT_VOICE_PROFILES)
+def _get_available_characters() -> list[str]:
+    """Lista personajes con ficha disponible."""
+    names = []
+    for d in CHARACTERS_DIRS:
+        if d.is_dir():
+            for f in d.glob("*.md"):
+                if not f.name.startswith("_") and not f.name.startswith("."):
+                    names.append(f.stem)
+    return sorted(names)
 
 
-_VOICE_PROFILES: dict[str, dict] = _load_voice_profiles()
+def _get_character_names_str() -> str:
+    """Devuelve lista de personajes para usar en descripciones de tool."""
+    return ", ".join(_get_available_characters())
 
 
-def _get_voice_profile_names() -> str:
-    """Devuelve lista de personajes con perfil de voz para usar en descripciones de tool."""
-    names = sorted(_VOICE_PROFILES.keys())
-    return ", ".join(n.capitalize() for n in names)
+def _append_nunca_diria(out: list[str], character: str, text: str) -> None:
+    """Busca patrones 'NUNCA diría' en la ficha del personaje y los cruza con el texto."""
+    profile_text = store.get_source_text(f"{character}.md")
+    if not profile_text:
+        for alt in (f"{character.replace(' ', '_')}.md", f"{character.lower()}.md"):
+            profile_text = store.get_source_text(alt)
+            if profile_text:
+                break
+    if not profile_text:
+        return
+    nunca_section = ""
+    in_section = False
+    for line in profile_text.split("\n"):
+        if re.search(r"(NUNCA|nunca\s+diría|no\s+diría)", line, re.IGNORECASE):
+            in_section = True
+        if in_section:
+            nunca_section += line + "\n"
+            if line.strip() == "" and len(nunca_section) > 50:
+                break
+    if nunca_section:
+        for pattern_line in nunca_section.split("\n"):
+            pattern = pattern_line.strip().strip("-* ").lower()
+            if len(pattern) > 5 and pattern in text.lower():
+                out.append(f"\n⚠ **NUNCA diría**: se detectó «{pattern[:60]}»")
 
 
 @server.tool(
@@ -1061,13 +1117,15 @@ def _get_voice_profile_names() -> str:
         },
         "character": {
             "type": "string",
-            "description": f"Nombre del personaje con perfil de voz registrado ({_get_voice_profile_names()})",
+            "description": f"Nombre del personaje con perfil de voz registrado ({_get_character_names_str()})",
         },
     },
     required=["chapter", "character"],
 )
 def check_voice_consistency(chapter: int, character: str) -> str:
     chapters = _get_chapters(chapter)
+    if not chapters:
+        return f"Capítulo {chapter} no encontrado."
     c = chapters[0]
     text = c["text"]
 
@@ -1076,16 +1134,17 @@ def check_voice_consistency(chapter: int, character: str) -> str:
     total = len(dialogue_lines)
 
     out = [f"## Voz de {character} — Capítulo {chapter}: {c['title']}"]
-    key = character.lower().strip()
-    profile = _VOICE_PROFILES.get(key)
 
-    if not profile:
-        return f"No hay perfil de voz registrado para: {character}"
-
-    out.append(f"**Esperado**: {profile['esperado']}")
+    voz = _get_character_voice(character)
+    if voz:
+        out.append(f"**Esperado**: {voz}")
+    else:
+        out.append(f"**Esperado**: (sin sección 'Voz' en la ficha de {character})")
 
     if not dialogue_lines:
         out.append("\n*Sin diálogo en este capítulo.*")
+        # NUNCA diría check even without dialogue
+        _append_nunca_diria(out, character, text)
         return "\n".join(out)
 
     questions = sum(1 for l in dialogue_lines if "?" in l)
@@ -1098,67 +1157,34 @@ def check_voice_consistency(chapter: int, character: str) -> str:
     avg_words = round(sum(len(l.split()) for l in dialogue_lines) / total, 1)
     repite_yo = sum(1 for l in dialogue_lines if re.search(r"\byo\b", l, re.IGNORECASE))
 
-    stats = {
-        "preguntas": (questions, total),
-        "imperativos": imperatives,
-        "líneas_cortas": (short_lines, total),
-        "elipsis": ellipsis_count,
-        "repite_yo": repite_yo,
-        "longitud_media": avg_words,
-    }
-
     out.append(f"\n**{total} líneas**, media {avg_words} pal, "
                f"{questions} preg, {imperatives} imp, {ellipsis_count} elipsis, {repite_yo} 'yo'")
 
-    # Verificar cada check del perfil
-    for check_name, _ in profile["checks"]:
-        if check_name == "preguntas":
-            rate = questions / total
-            icon = "✓" if rate > 0.4 else "⚠"
-            label = "alto (coherente con perfil preguntativo)" if rate > 0.4 else "bajo para perfil preguntativo"
-            out.append(f"\n{icon} **Preguntas**: {rate:.0%} — {label}")
-        elif check_name == "imperativos":
-            icon = "✓" if imperatives > 0 else "ℹ"
-            label = "coherente con perfil imperativo" if imperatives > 0 else "neutro (depende del capítulo)"
-            out.append(f"\n{icon} **Imperativos**: {imperatives} — {label}")
-        elif check_name == "líneas_cortas":
-            rate = short_lines / total
-            icon = "✓" if rate > 0.25 else "ℹ"
-            out.append(f"\n{icon} **Líneas cortas (≤5 pal)**: {rate:.0%} — {'coherente con perfil telegráfico' if rate > 0.25 else 'neutro'}")
-        elif check_name == "elipsis":
-            icon = "✓" if ellipsis_count > 0 else "ℹ"
-            out.append(f"\n{icon} **Elipsis**: {ellipsis_count} — {'coherente con perfil evasivo' if ellipsis_count > 0 else 'neutro'}")
-        elif check_name == "repite_yo":
-            icon = "✓" if repite_yo > 0 else "ℹ"
-            out.append(f"\n{icon} **'yo' en diálogo**: {repite_yo} {'— coherente con perfil humano/roto' if repite_yo > 0 else '— neutro'}")
-        elif check_name == "longitud_media":
-            icon = "✓" if avg_words >= 8 else "ℹ"
-            out.append(f"\n{icon} **Longitud media**: {avg_words} pal/línea — {'coherente con perfil erudito' if avg_words >= 8 else 'corto para perfil erudito'}")
-    # Buscar "NUNCA diría" en la ficha del personaje
-    profile_text = store.get_source_text(f"{character}.md")
-    if not profile_text:
-        # Intentar con nombres alternativos
-        for alt in (f"{character.lower()}.md", f"{character.replace(' ', '_')}.md"):
-            profile_text = store.get_source_text(alt)
-            if profile_text:
-                break
+    # Derivar checks del texto de voz
+    voz_lower = voz.lower() if voz else ""
+    if any(w in voz_lower for w in ["pregunta", "duda", "cuestiona", "preguntativ"]):
+        rate = questions / total if total else 0
+        icon = "✓" if rate > 0.4 else "⚠"
+        out.append(f"\n{icon} **Preguntas**: {rate:.0%} — {'alto (coherente con perfil preguntativo)' if rate > 0.4 else 'bajo para perfil preguntativo'}")
+    if any(w in voz_lower for w in ["imperativo", "ordena", "manda"]):
+        icon = "✓" if imperatives > 0 else "ℹ"
+        out.append(f"\n{icon} **Imperativos**: {imperatives} — {'coherente con perfil imperativo' if imperatives > 0 else 'neutro (depende del capítulo)'}")
+    if any(w in voz_lower for w in ["corto", "breve", "telegráfico", "seco", "lacónico"]):
+        rate = short_lines / total if total else 0
+        icon = "✓" if rate > 0.25 else "ℹ"
+        out.append(f"\n{icon} **Líneas cortas (≤5 pal)**: {rate:.0%} — {'coherente con perfil telegráfico' if rate > 0.25 else 'neutro'}")
+    if any(w in voz_lower for w in ["evasivo", "vacila", "titubea"]):
+        icon = "✓" if ellipsis_count > 0 else "ℹ"
+        out.append(f"\n{icon} **Elipsis**: {ellipsis_count} — {'coherente con perfil evasivo' if ellipsis_count > 0 else 'neutro'}")
+    if any(w in voz_lower for w in ["humano", "roto", "vulnerable"]):
+        icon = "✓" if repite_yo > 0 else "ℹ"
+        out.append(f"\n{icon} **'yo' en diálogo**: {repite_yo} {'— coherente con perfil humano/roto' if repite_yo > 0 else '— neutro'}")
+    if any(w in voz_lower for w in ["erudito", "culto", "extenso", "elaborado", "formal"]):
+        icon = "✓" if avg_words >= 8 else "ℹ"
+        out.append(f"\n{icon} **Longitud media**: {avg_words} pal/línea — {'coherente con perfil erudito' if avg_words >= 8 else 'corto para perfil erudito'}")
 
-    if profile_text:
-        # Buscar sección "NUNCA" o "nunca diría"
-        nunca_section = ""
-        in_section = False
-        for line in profile_text.split("\n"):
-            if re.search(r"(NUNCA|nunca\s+diría|no\s+diría)", line, re.IGNORECASE):
-                in_section = True
-            if in_section:
-                nunca_section += line + "\n"
-                if line.strip() == "" and len(nunca_section) > 50:
-                    break
-        if nunca_section:
-            for pattern_line in nunca_section.split("\n"):
-                pattern = pattern_line.strip().strip("-* ").lower()
-                if len(pattern) > 5 and pattern in text.lower():
-                    out.append(f"\n⚠ **NUNCA diría**: se detectó «{pattern[:60]}»")
+    # Buscar "NUNCA diría" en la ficha del personaje
+    _append_nunca_diria(out, character, text)
 
     return "\n".join(out)
 
@@ -1758,9 +1784,10 @@ def mcp_check_chapter(chapter: int) -> str:
         else:
             # Intentar detectar POV desde el nombre del archivo o el primer personaje mencionado
             first_char = ""
+            available_chars_lower = {c.lower() for c in _get_available_characters()}
             for token in re.findall(r"\b[A-Z][a-záéíóúñ]+(?: [A-Z][a-záéíóúñ]+)?\b", ch["text"][:300]):
                 token_lower = token.strip().lower()
-                if token_lower in _VOICE_PROFILES:
+                if token_lower in available_chars_lower:
                     first_char = token.strip()
                     break
             if first_char:

@@ -1,4 +1,4 @@
-# Sanderson vs King — Conflictos y complementos
+# Sanderson vs King: Conflictos y complementos
 
 > Ambos son maestros del oficio, pero sus enfoques chocan en puntos clave.
 > Este documento identifica dónde se contradicen y cuándo seguir a cada uno.
@@ -16,7 +16,7 @@
 
 **Cuándo seguir a King**: novelas autoconclusivas, prosa atmosférica, personajes que «cobran vida» y te sorprenden. Si el outlining te paraliza.
 
-**Término medio**: Sanderson outlinea la *trama* pero descubre los *personajes* mientras escribe. King conoce a sus personajes y sigue *su* lógica, pero la estructura general emerge sola. Ambos hacen ambas cosas — la diferencia es el énfasis.
+**Término medio**: Sanderson outlinea la *trama* pero descubre los *personajes* mientras escribe. King conoce a sus personajes y sigue *su* lógica, pero la estructura general emerge sola. Ambos hacen ambas cosas: la diferencia es el énfasis.
 
 ---
 
@@ -29,9 +29,9 @@
 
 **Cuándo seguir a Sanderson**: fantasía épica donde la magia resuelve conflictos. Si el protagonista usa la magia estratégicamente, el lector necesita entender las reglas.
 
-**Cuándo seguir a King**: terror, suspense, fantasía lírica. Si el misterio es parte del tono (el Abismo en Cobete es más King que Sanderson).
+**Cuándo seguir a King**: terror, suspense, fantasía lírica. Si el misterio es parte del tono (la naturaleza del Abismo, por ejemplo, es más King que Sanderson).
 
-**Término medio**: usa el *expectro* — magia blanda para crear tensión (el Abismo), magia dura para resolución (Las Tres Piedras). Cobete mezcla ambas.
+**Término medio**: usa el *espectro*: magia blanda para crear tensión (lo desconocido), magia dura para resolución (las reglas claras). Muchos autores mezclan ambas.
 
 ---
 
@@ -72,7 +72,7 @@
 | Hace **pasadas separadas**: estructura → personajes → prosa → diálogo → continuidad. Cada pasada mira un aspecto concreto. | **Kill your darlings**: segundo borrador = primero − 10%. Poda global. No pasadas temáticas sino una gran pasada de corte. |
 | *«No puedo arreglar una página en blanco.»* | *«Kill your darlings, even when it breaks your egocentric little scribbler's heart.»* |
 
-**Cuándo seguir a Sanderson**: primera novela larga. Las pasadas separadas evitan la sobrecarga — sabes exactamente qué buscar en cada ronda.
+**Cuándo seguir a Sanderson**: primera novela larga. Las pasadas separadas evitan la sobrecarga: sabes exactamente qué buscar en cada ronda.
 
 **Cuándo seguir a King**: si ya tienes experiencia y tu problema es la longitud. La poda del 10% es un objetivo claro y medible.
 
@@ -87,7 +87,7 @@
 | Construye mundos detallados. La descripción es parte de la promesa del género (fantasía épica). El lector de Sanderson espera inmersión en el mundo. | Describe lo mínimo para mantener la pelota en movimiento. La prioridad es que el lector no olvide que está leyendo una historia, no un tour turístico. |
 | *«Es mejor ir a lo grande y ser épico. Pero asegúrate de ir también a lo profundo.»* | *«The object of fiction is to make the reader welcome and then tell a story.»* |
 
-**Cuándo seguir a Sanderson**: el lector de fantasía espera worldbuilding. La descripción del Bosque Susurrante, las Ruinas de Kael-Thar, el Valle Oscuro — todo eso es parte de la experiencia.
+**Cuándo seguir a Sanderson**: el lector de fantasía espera worldbuilding. La descripción del bosque encantado, las ruinas antiguas, el valle prohibido: todo eso es parte de la experiencia.
 
 **Cuándo seguir a King**: escenas de alta tensión donde la descripción frena el ritmo. Cuando el lector necesita *sentir* la urgencia, no *ver* los muebles.
 
@@ -98,11 +98,11 @@
 | Sanderson | King |
 |---|---|
 | El personaje tiene un arco definido: mentira → enfrentamiento → verdad. Deseo + Miedo + Mentira. Construcción consciente desde la teoría. | El personaje se descubre. No hay fórmulas. La verdad emocional del personaje emerge de la escritura, no de la planificación. |
-| *«Un personaje no es interesante por lo que puede hacer. Es interesante por lo que no puede hacer.»* | *«Write what you know — be honest, emotionally.»* |
+| *«Un personaje no es interesante por lo que puede hacer. Es interesante por lo que no puede hacer.»* | *«Write what you know: be honest, emotionally.»* |
 
 **Cuándo seguir a Sanderson**: cuando necesitas diagnósticar por qué un personaje no funciona. El modelo Deseo + Miedo + Mentira es una herramienta de diagnóstico excelente.
 
-**Cuándo seguir a King**: cuando creas personajes nuevos. No empieces con teoría — empieza con una persona real en una situación real. La teoría viene después, si el personaje no funciona.
+**Cuándo seguir a King**: cuando creas personajes nuevos. No empieces con teoría: empieza con una persona real en una situación real. La teoría viene después, si el personaje no funciona.
 
 ---
 
@@ -115,7 +115,7 @@
 
 **Cuándo seguir a Sanderson**: cuando estás atascado o el manuscrito no funciona. Las estructuras son mapas para encontrar el problema.
 
-**Cuándo seguir a King**: durante el primer borrador. Escribe sin pensar en estructura. La estructura se revisa después — nunca durante.
+**Cuándo seguir a King**: durante el primer borrador. Escribe sin pensar en estructura. La estructura se revisa después: nunca durante.
 
 ---
 
@@ -124,7 +124,7 @@
 | Sanderson | King |
 |---|---|
 | Escribe por la mañana, salta entre escenas, outlinea durante meses. No escribe en orden lineal. | Escribe todos los días a la misma hora, 2.000 palabras, en orden lineal. «Puerta cerrada» para el primer borrador. |
-| *«Salta entre áreas — un día trabajo en cultura, otro en personajes, otro en trama.»* | *«I like to get ten pages a day, which amounts to 2,000 words.»* |
+| *«Salta entre áreas: un día trabajo en cultura, otro en personajes, otro en trama.»* | *«I like to get ten pages a day, which amounts to 2,000 words.»* |
 
 **Cuándo seguir a Sanderson**: si te aburres escribiendo en orden. Si necesitas ver el mapa completo antes de avanzar.
 

@@ -40,7 +40,7 @@ def _find_vault() -> Path:
     return Path.cwd().resolve()
 
 
-VAULT: Path = _find_vault()
+REPO: Path = _find_vault()
 
 # ---------------------------------------------------------------------------
 # Config desde .fiction/config.json
@@ -49,22 +49,18 @@ VAULT: Path = _find_vault()
 DEFAULT_CONFIG = {
     "chapters_dir": "Capítulos",
     "references_dirs": ["Referencias"],
-    "characters_dirs": ["Personajes"],
+    "characters_dirs": ["Mundo/Personajes"],
     "world_dirs": ["Mundo"],
     "style_dir": "Estilo",
     "manifest_file": "Capítulos/manifiesto.json",
     "foreshadowing_file": "Referencias/Foreshadowing.md",
     "estado_file": "Referencias/Estado.md",
     "pendientes_file": "Referencias/Pendientes.md",
-    "character_states_file": ".fiction/character_states.json",
-    "continuity_file": ".fiction/continuity.json",
-    "consistency_file": ".fiction/consistency.json",
-    "voice_profiles_file": ".fiction/voice_profiles.json",
     "templates_dir": "Plantillas",
     "output_dir": "output",
 }
 
-CONFIG_FILE = VAULT / ".fiction" / "config.json"
+CONFIG_FILE = REPO / ".fiction" / "config.json"
 
 
 def load_config() -> dict:
@@ -85,35 +81,45 @@ def load_config() -> dict:
 CONFIG = load_config()
 
 # ---------------------------------------------------------------------------
+# Content root: si existe vault/ → usarlo como base de contenido
+# ---------------------------------------------------------------------------
+
+_VAULT_SUB = REPO / "vault"
+CONTENT_ROOT: Path = _VAULT_SUB if _VAULT_SUB.is_dir() else REPO
+
+# Alias para compatibilidad
+VAULT = CONTENT_ROOT
+
+# ---------------------------------------------------------------------------
 # Paths resolved from config
 # ---------------------------------------------------------------------------
 
-def _resolve(key: str) -> Path:
-    return (VAULT / str(CONFIG[key])).resolve()
+def _resolve_content(key: str) -> Path:
+    """Resuelve rutas de contenido contra CONTENT_ROOT."""
+    return (CONTENT_ROOT / str(CONFIG[key])).resolve()
 
+def _resolve_repo(key: str) -> Path:
+    """Resuelve rutas de infraestructura contra REPO."""
+    return (REPO / str(CONFIG[key])).resolve()
 
-def _resolve_list(key: str) -> list[Path]:
+def _resolve_content_list(key: str) -> list[Path]:
     raw = CONFIG.get(key, [])
     if isinstance(raw, str):
         raw = [raw]
-    return [(VAULT / d).resolve() for d in raw if d]
+    return [(CONTENT_ROOT / d).resolve() for d in raw if d]
 
 
-CHAPTERS_DIR = _resolve("chapters_dir")
-REFERENCES_DIRS = _resolve_list("references_dirs")
-CHARACTERS_DIRS = _resolve_list("characters_dirs")
-WORLD_DIRS = _resolve_list("world_dirs")
-STYLE_DIR = _resolve("style_dir")
-MANIFEST_FILE = _resolve("manifest_file")
-FORESHADOWING_FILE = _resolve("foreshadowing_file")
-ESTADO_FILE = _resolve("estado_file")
-PENDIENTES_FILE = _resolve("pendientes_file")
-CHARACTER_STATES_FILE = _resolve("character_states_file")
-CONTINUITY_FILE = _resolve("continuity_file")
-CONSISTENCY_FILE = _resolve("consistency_file")
-VOICE_PROFILES_FILE = _resolve("voice_profiles_file")
-TEMPLATES_DIR = _resolve("templates_dir")
-OUTPUT_DIR = _resolve("output_dir")
+CHAPTERS_DIR = _resolve_content("chapters_dir")
+REFERENCES_DIRS = _resolve_content_list("references_dirs")
+CHARACTERS_DIRS = _resolve_content_list("characters_dirs")
+WORLD_DIRS = _resolve_content_list("world_dirs")
+STYLE_DIR = _resolve_content("style_dir")
+MANIFEST_FILE = _resolve_content("manifest_file")
+FORESHADOWING_FILE = _resolve_content("foreshadowing_file")
+ESTADO_FILE = _resolve_content("estado_file")
+PENDIENTES_FILE = _resolve_content("pendientes_file")
+TEMPLATES_DIR = _resolve_content("templates_dir")
+OUTPUT_DIR = _resolve_repo("output_dir")
 
 # ---------------------------------------------------------------------------
 # Manifiesto access
@@ -123,7 +129,7 @@ def _import_manifiesto():
     if "manifiesto" in sys.modules:
         m = sys.modules["manifiesto"]
         return getattr(m, "manifiesto", m)
-    tools_dir = str(VAULT / "tools")
+    tools_dir = str(REPO / ".tools")
     if tools_dir not in sys.path:
         sys.path.insert(0, tools_dir)
     import manifiesto as _manifiesto_mod

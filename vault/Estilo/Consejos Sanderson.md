@@ -1,6 +1,6 @@
 # Consejos de Brandon Sanderson — Curso de escritura 2025
 
-Brandon Sanderson imparte desde 2004 un curso de escritura de ciencia ficción y fantasía en la Universidad Brigham Young (BYU). La edición 2025 consta de 16 vídeos disponibles en YouTube. Este documento resume las lecciones más relevantes para la escritura de Las Tierras Quebradas.
+Brandon Sanderson imparte desde 2004 un curso de escritura de ciencia ficción y fantasía en la Universidad Brigham Young (BYU). La edición 2025 consta de 16 vídeos disponibles en YouTube. Este documento resume las lecciones más relevantes para aplicar a tu proyecto.
 
 ---
 
@@ -77,7 +77,6 @@ No abuses: usarlo demasiado puede distraer de la trama principal.
 Toda historia responde una pregunta central que debe quedar clara al final del primer acto:
 - Star Wars: ¿Luke se convertirá en Jedi y derrotará al Imperio?
 - Indiana Jones: ¿Indy encontrará el Arca antes que los nazis?
-- Las Tierras Quebradas: ¿Lena decidirá el destino de las Piedras?
 
 ### Estructura de tres actos
 1. **Acto 1**: status quo + incidente incitador.
@@ -363,24 +362,21 @@ Consejos adicionales:
 
 ---
 
-## 12. Aplicación a Las Tierras Quebradas
+## 12. Checklist de aplicación
+
+> Rellena esta tabla con el estado de cada concepto en tu proyecto.
 
 | Concepto | Estado actual |
-|---|---|---|
-| **Promesa** | Caps. 1-4 establecen: la marcada debe decidir el destino del mundo. Se cumple en cap. 11 pero no como el lector espera — el pago es que Lena no decide, sino que acepta el sacrificio de El Errant |
-| **Progreso** | Viaje geográfico (Valle Oscuro → Bosque → [[Las Tierras Quebradas|Tierras Quebradas]] → Kael-Thar). Emocional (Lena descubre que Kael no es el enemigo). Sistema de magia (Sera activa la Piedra Gris) |
-| **Pago** | Definido en el outline: El Errant canta el Verso del Errante y muere. Kael es liberado. Sera hereda la Piedra Gris. Lena pierde la marca |
-| **POV único por capítulo** | ✅ Lena + Sera (07). Cap 09 corregido a POV Lena (no El Errant) |
-| **Elipsis entre capítulos** | ✅ Regla adoptada |
-| **Escalación Sí-pero / No-y** | ✅ Cadena completa: 06 separación, 07 puente roto, 08 Kael prisionero, 10 infiltración, 11 barrera |
-| **Signposting** | ✅ Cada capítulo termina con revelación o decisión. Tercer camino de Thorn conectado en cap 09 |
-| **Worldbuilding iceberg** | ✅ Archivos actualizados con verdad oculta (Abismo consciente, Kael prisionero, Sera portadora, Custodia = ex-Ojo) |
-| **Magia con limitaciones** | ✅ Piedra Blanca: coste escalado (pensamiento → recuerdo → nombre de madre). Piedra Gris: dormida hasta portador. Verso del Errante: vida del cantor |
-| **Personaje proactivo** | ✅ Lena decide (04,06,08,11), Sera decide (07,09), El Errant decide (09,11) |
-| **Try-Fail cycle** | ✅ 06 separación, 07 puente roto, 10 infiltración con heridos, 11 barrera con pérdida de recuerdos |
-| **Promesa/Pago: tercer camino** | ✅ Cap 04 Thorn insinúa, cap 09 Lena lo conecta explícitamente con el Verso |
-| **Promesa/Pago: eco Lena-Kael** | ✅ Cap 08 planta (biblioteca, polvo, risa), cap 12 recoge (misma voz en recuerdo de Lira) |
-| **Promesa/Pago: Sera y Kael** | ✅ Cap 09 Sera suelta el hacha, cap 11 Kael mira a Sera antes de saltar |
+|----------|--------------|
+| **Promesa** | |
+| **Progreso** | |
+| **Pago** | |
+| **POV único por capítulo** | |
+| **Escalación Sí-pero / No-y** | |
+| **Worldbuilding iceberg** | |
+| **Magia con limitaciones** | |
+| **Personaje proactivo** | |
+| **Promesa/Pago** | |
 | **Voces diferenciadas** | ⚠️ Pendiente: patrones de habla aún similares en diálogos largos |
 
 ---
