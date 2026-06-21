@@ -58,7 +58,7 @@ El repositorio tiene tres contextos separados:
 │   │   ├── Lugares/           # Geografía y localizaciones
 │   │   └── Historia/          # Lore, magia, cronología
 │   ├── Referencias/
-│   │   ├── Fundamentos.md          # Reglas, cosmología, worldbuilding canónico
+│   │   ├── Fundamentos.md          # Reglas, cosmología, sistema de sangre (worldbuilding puro)
 │   │   ├── Trama.md      # Decisiones narrativas (fuente única del argumento)
 │   │   ├── Outliner.md             # Plan capítulo a capítulo, decisiones cerradas
 │   │   ├── Índice.md               # Mapa de navegación rápida de la bóveda
