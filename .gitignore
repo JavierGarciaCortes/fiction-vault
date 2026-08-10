@@ -6,15 +6,19 @@ web/node_modules/
 web/src/data/vault.json
 web/.vercel/
 *.egg-info/
-# Obsidian (auto-generated, user-specific)
-vault/.obsidian/plugins/*/main.js
-vault/.obsidian/plugins/*/manifest.json
-vault/.obsidian/plugins/*/styles.css
-vault/.obsidian/workspace.json
-vault/.obsidian/workspace-mobile.json
 output/
 __pycache__/
-vault/__pycache__/
 .ruff_cache/
-vault/.ruff_cache/
 .venv/
+
+# Obsidian (auto-generated, user-specific)
+vault/.obsidian/
+
+# Contenido del libro (no se sube al fork público)
+vault/*
+!vault/Plantillas/
+recomendaciones/
+vault/vault.zip
+2026-08-01.md
+*.canvas
+.obsidian/

@@ -1,9 +1,9 @@
 {
   "description": "Configuración del proyecto. Todas las rutas son relativas a la raíz de la bóveda.",
 
-  "title": "Título de tu libro",
-  "author": "Tu nombre",
-  "subtitle": "Dashboard de worldbuilding",
+  "title": "El Cambio",
+  "author": "JGC",
+  "subtitle": "La voz del pueblo",
   "chapters_dir": "Capítulos",
 
   "manifest_file": "Capítulos/manifiesto.json",
@@ -12,12 +12,12 @@
   "templates_dir": "Plantillas",
   "output_dir": "output",
 
-  "default_pov": "_Protagonista",
-  "midpoint_chapter": 0,
+  "default_pov": "Darío Vidal",
+  "midpoint_chapter": 7,
 
   "acts": {
-    "1": [0, 1],
-    "2": [],
+    "1": [1, 2, 3, 4, 5, 6],
+    "2": [7, 8, 9, 10],
     "3": []
   },
   "act_labels": {
@@ -26,6 +26,16 @@
     "3": "Resolución"
   },
   "pov_map": {
-    "1": "_Protagonista"
+    "1": "Darío Vidal",
+    "2": "Clara Vidal",
+    "3": "Núria Soler",
+    "4": "Clara Vidal",
+    "5": "Joel Durán",
+    "6": "Mateo Ríos",
+    "7": "Darío Vidal",
+    "8": "Marc Vidal",
+    "9": "Adam Lozano",
+    "10": "Mateo Ríos",
+    "11": "Clara Vidal"
   }
 }

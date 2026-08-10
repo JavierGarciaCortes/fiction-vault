@@ -38,11 +38,15 @@ class Manifiesto:
         return self._data["orden"]
 
     def get_numero(self, filename: str) -> int | None:
-        """Devuelve el número de capítulo (0-based: prólogo=0) para un archivo dado."""
+        """Devuelve el número de capítulo (1-based: primer capítulo=1) para un archivo dado.
+
+        Coincide con el prefijo del archivo (`10 - ...`), el campo YAML `capítulo:` y
+        el flag `--cap N` de las tools.
+        """
         self._load()
         for i, c in enumerate(self._data["orden"]):
             if c["archivo"] == filename:
-                return i
+                return i + 1
         return None
 
     def get_pov(self, filename: str) -> str:

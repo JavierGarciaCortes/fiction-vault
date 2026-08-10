@@ -32,7 +32,7 @@ def sync(dry: bool = False):
     updated = 0
     for i, entry in enumerate(orden):
         filename = entry["archivo"]
-        cap_num = i  # 0-based: prólogo=0, cap 1=1, etc.
+        cap_num = i + 1  # 1-based: primer capítulo=1, cap 10=10, etc.
         fp = CHAPTERS_DIR / filename
 
         if not fp.exists():

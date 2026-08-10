@@ -1,5 +1,7 @@
 # Fiction Vault
 
+> **Fork de [quinwacca/fiction-vault](https://github.com/quinwacca/fiction-vault)**, adaptado para funcionar en **Windows** en lugar de Linux. Mismo proyecto base: mismas tools, mismo MCP server, mismo dashboard. Cambios principales: `python3` → `python` en la config de opencode y ajustes de compatibilidad (rutas, Makefile, herramientas).
+
 Estructura base para arrancar un proyecto de escritura con [opencode](https://opencode.ai).
 
 Compatible con [Obsidian](https://obsidian.md) — todo el contenido creativo son archivos Markdown con wikilinks `[[enlaces]]`. Los capítulos, fichas de personaje, ubicaciones y lore se editan en Obsidian; las tools Python trabajan directamente sobre los `.md`.
@@ -23,7 +25,7 @@ Sin dependencias externas en el lado Python — solo stdlib (3.11+). El dashboar
 ## Cómo usar
 
 ```bash
-git clone https://github.com/quinwacca/fiction-vault.git mi-libro
+git clone https://github.com/JavierGarciaCortes/fiction-vault.git mi-libro
 cd mi-libro
 # Abrir con opencode, o arrastrar vault/ a Obsidian
 ```
@@ -217,13 +219,13 @@ El dashboard despliega en Vercel con `astro.config.mjs` y `vercel.json` ya confi
 
 ## Windows
 
-Cambiar `python3` por `python` en `opencode.json`:
+Este fork ya viene adaptado para Windows: `opencode.json` usa `python` en lugar de `python3` (ver sección 7 de `AGENTS.md`).
 
 ```json
 "command": ["python", ".tools/fiction_mcp.py"]
 ```
 
-El resto funciona igual — `pathlib` maneja las rutas automáticamente.
+El resto funciona igual — `pathlib` maneja las rutas automáticamente. Si clonas el proyecto original de quinwacca (pensado para Linux), tendrás que hacer ese cambio manualmente.
 
 ## Tools
 

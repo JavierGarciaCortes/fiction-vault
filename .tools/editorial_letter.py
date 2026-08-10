@@ -56,7 +56,7 @@ except ImportError:
 from vault import (
     VAULT, CHAPTERS_DIR, CHARACTERS_DIRS, FORESHADOWING_FILE,
     CONFIG_FILE, get_chapter_files,
-    get_chapter_number, strip_yaml, strip_wikilinks,
+    get_chapter_number, get_chapter_title, strip_yaml, strip_wikilinks,
 )
 
 PERSONAJES_DIR = CHARACTERS_DIRS[0] if CHARACTERS_DIRS else VAULT / "Mundo" / "Personajes"
@@ -94,9 +94,9 @@ def _load_acts_config() -> tuple[dict, dict, dict, int]:
         if total > 0:
             third = max(1, total // 3)
             acts = {
-                1: list(range(0, third)),
-                2: list(range(third, 2 * third)),
-                3: list(range(2 * third, total)),
+                1: list(range(1, third + 1)),
+                2: list(range(third + 1, 2 * third + 1)),
+                3: list(range(2 * third + 1, total + 1)),
             }
             labels = {1: "Setup", 2: "Confrontación", 3: "Resolución"}
             return acts, labels, {}, midpoint, default_pov
@@ -127,8 +127,7 @@ def read_chapter(filepath: Path) -> dict:
     num = get_chapter_number(filepath)
     raw = filepath.read_text("utf-8")
     clean = strip_yaml(raw)
-    title_match = re.search(r"#\s*Capítulo\s+\d+[:\s]*(.+)", raw)
-    title = title_match.group(1).strip() if title_match else ""
+    title = get_chapter_title(raw)
     words = len(clean.split())
     return {
         "num": num,
