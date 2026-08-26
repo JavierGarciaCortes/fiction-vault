@@ -17,6 +17,8 @@ vault/.obsidian/
 # Contenido del libro (no se sube al fork público)
 vault/*
 !vault/Plantillas/
+!vault/Poemas/
+!vault/Poemas/**
 recomendaciones/
 vault/vault.zip
 2026-08-01.md

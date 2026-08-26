@@ -1,9 +1,9 @@
 {
   "description": "Configuración del proyecto. Todas las rutas son relativas a la raíz de la bóveda.",
 
-  "title": "El Cambio",
-  "author": "JGC",
-  "subtitle": "La voz del pueblo",
+  "title": "Panorama ciego del insecto esteril",
+  "author": "Javier Garcia Cortes",
+  "subtitle": "Poemas de desesperanza",
   "chapters_dir": "Capítulos",
 
   "manifest_file": "Capítulos/manifiesto.json",
