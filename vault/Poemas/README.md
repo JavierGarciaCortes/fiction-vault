@@ -4,5 +4,5 @@
 
 Manuscrito de poesía de Javier Garcia Cortes.
 
-El archivo editable original se conserva en formato `.doc` mientras se completa
-la organización de la bóveda.
+La transcripción Markdown completa está en `Poemas de desesperanza.md`.
+El archivo editable original se conserva en formato `.doc` en la raíz del proyecto.

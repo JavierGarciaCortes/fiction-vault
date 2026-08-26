@@ -5,8 +5,8 @@
 Este repositorio contiene el proyecto poético **Panorama ciego del insecto esteril**,
 con el subtítulo **Poemas de desesperanza**, de **Javier Garcia Cortes**.
 
-El manuscrito original se incluye en formato `.doc` y permanece temporalmente
-en la raíz porque el archivo está abierto en LibreOffice.
+La versión Markdown del poemario está en `vault/Poemas/Poemas de desesperanza.md`.
+El manuscrito original `.doc` también se conserva en la raíz.
 
 > **Fork de [quinwacca/fiction-vault](https://github.com/quinwacca/fiction-vault)**, adaptado para funcionar en **Windows** en lugar de Linux. Mismo proyecto base: mismas tools, mismo MCP server, mismo dashboard. Cambios principales: `python3` → `python` en la config de opencode y ajustes de compatibilidad (rutas, Makefile, herramientas).
 
